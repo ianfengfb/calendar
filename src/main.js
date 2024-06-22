@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import store from './store';
+import 'bootstrap/dist/css/bootstrap.css'
 import 'vuetify/styles';
 import "@mdi/font/css/materialdesignicons.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -30,6 +32,7 @@ const app = createApp(App);
 
 app.use(router);
 app.use(vuetify);
+app.use(store);
 
 app.component('base-card', BaseCard);
 
