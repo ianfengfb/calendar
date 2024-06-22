@@ -1,11 +1,13 @@
 <template>
     <header>
         <nav>
-            <h1><router-link to="/">Find a Coach</router-link></h1>
             <ul>
-                <!-- <li>
-                    <router-link to="/calendar">All Coaches</router-link>
-                </li> -->
+                <li>
+                    <router-link to="/calendar">Calendar</router-link>
+                </li>
+                <li>
+                    <router-link to="/diary">Diary</router-link>
+                </li>
             </ul>
         </nav>
     </header>
@@ -22,7 +24,7 @@
 
     header a {
     text-decoration: none;
-    color: #f391e3;
+    color: #03a9f4;
     display: inline-block;
     padding: 0.75rem 1.5rem;
     border: 1px solid transparent;
@@ -31,7 +33,7 @@
     a:active,
     a:hover,
     a.router-link-active {
-    border: 1px solid #f391e3;
+    border: 1px solid #03a9f4;
     }
 
     h1 {
