@@ -1,22 +1,37 @@
+import axios from 'axios';
+
 export default {
-    async addDiary({ commit }, diary) {
-        console.log(diary);
-        const response = await fetch('http://127.0.0.1:8000/api/diary', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            withCredentials: true,
-            body: diary,
-        });
-
-        // const responseData = await response.json();
-
-        if (!response.ok) {
-            //error
+    async addDiary({ commit, dispatch }, diary) {
+        dispatch('global/clearAlert', null,{ root: true });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/diaries', diary);
+            const responseData = response?.data;
+            dispatch('global/createAlert', {
+                title: 'Diary added successfully!',
+                type: 'success'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+        }  catch (error) {
+            const errorData = error?.response;
+            dispatch('global/createAlert', {
+                title: errorData?.message || 'Failed to save!',
+                type: 'error'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
         }
-        commit('addDiary', diary);
+    },
+    async fetchDiaries({ commit }, filter) {
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/get-diaries', filter);
+            const responseData = response?.data?.data;
+            commit('fetchDiaries', responseData);
+        } catch (error) {
+            console.error(error);
+        }
     },
     updateDiary({ commit }, diary) {
         commit('updateDiary', diary);

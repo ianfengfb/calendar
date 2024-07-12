@@ -11,6 +11,7 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 
 import BaseCard from './components/UI/BaseCard.vue';
+import FullWidthCard from './components/UI/FullWidthCard.vue';
 
 const vuetify = createVuetify({
     components,
@@ -35,5 +36,6 @@ app.use(vuetify);
 app.use(store);
 
 app.component('base-card', BaseCard);
+app.component('full-width-card', FullWidthCard);
 
 app.mount('#app');

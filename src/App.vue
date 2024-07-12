@@ -1,4 +1,5 @@
 <template>
+  <base-alert></base-alert>
   <div class="page-container">
     <the-header></the-header>
     <router-view></router-view>
@@ -7,10 +8,12 @@
 
 <script>
   import TheHeader from "@/components/TheHeader.vue";
+  import BaseAlert from "@/components/UI/BaseAlert.vue";
 
   export default {
     components: {
       TheHeader,
+      BaseAlert
     },
   };
 </script>
@@ -34,5 +37,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
   }
 </style>

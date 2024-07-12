@@ -1,4 +1,26 @@
 <template>
+    <div class="form-title">
+        <h2>How are you doing today?</h2>
+        <div class="switch-user-container">
+            <v-avatar>
+                <v-img
+                    alt="Ian"
+                    src="/src/assets/imgs/ian.png"
+                ></v-img>
+            </v-avatar>
+            <v-switch
+            v-model="user"
+            hide-details
+            inset
+            ></v-switch>
+            <v-avatar>
+                <v-img
+                    alt="Charz"
+                    src="/src/assets/imgs/charz.png"
+                ></v-img>
+            </v-avatar>
+        </div>
+    </div>
     <v-text-field 
         label="Date" 
         class="mt-5"
@@ -25,7 +47,8 @@
         accept="image/*"
         label="File input"
         class="mt-3"
-        v-model="file"
+        v-model="files"
+        multiple
     ></v-file-input>
     <div :class="{ratingErr: !isRatingValid}" class="mt-5">
         <label >How happy are you today</label>
@@ -47,25 +70,26 @@
         color="primary"
         @click="saveDiary"
         class="mt-3"
-    >Submit</v-btn>
+    >{{btnText}}</v-btn>
 </template>
 
 <script>
     export default {
         data() {
             return {
+                user: false,
                 datePickerValue: new Date(),
                 showDatePicker: false,
                 note: '',
-                file: null,
+                files: null,
                 rating: 0,
                 isLargeScreen: true,
                 isNoteValid: true,
                 isRatingValid: true,
-                noteErrorMessage: []
+                noteErrorMessage: [],
+                isSaving: false
             }
         },
-        emits: ['save-data'],
         methods: {
             toggleDatePicker() {
                 this.showDatePicker = !this.showDatePicker;
@@ -88,27 +112,55 @@
                     this.isRatingValid = false;
                 }
             },
-            saveDiary() {
+            submitDiary() {
+                if (this.isSaving) return;
                 this.validatingForm();
                 if (this.isNoteValid && this.isRatingValid) {
-                    let data = new FormData();
-                    data.append('date', this.date);
-                    data.append('note', this.note);
-                    data.append('file', this.file);
-                    data.append('rating', this.rating);
-                    this.$emit('save-data', data);
+                    this.saveDiary();
                 }
+            },
+            async saveDiary() {
+                this.isSaving = true;
+                let data = new FormData();
+                data.append('date', this.datePickerValue.toISOString().split('T')[0]);
+                data.append('note', this.note);
+                if (this.files !== null) {
+                    this.files.forEach(file => {
+                        data.append('images[]', file);
+                    });
+                }
+                data.append('mood', this.rating);
+                data.append('user_id', this.user ? 2 : 1);
+                try {
+                    await this.$store.dispatch('diaries/addDiary', data);
+                    this.resetForm();
+                } catch (error) {
+                    console.log(error);
+                }
+                this.isSaving = false;
             },
             makeRatingValid() {
                 this.isRatingValid = true;
             },
             makeNoteValid() {
                 this.isNoteValid = true;
+            },
+            resetForm() {
+                this.datePickerValue = new Date();
+                this.note = '';
+                this.files = null;
+                this.rating = 0;
+                this.isNoteValid = true;
+                this.isRatingValid = true;
+                this.noteErrorMessage = [];
             }
         },
         computed: {
             date() {
                 return this.datePickerValue.toDateString();
+            },
+            btnText() {
+                return this.isSaving ? 'Saving...' : 'Submit';
             }
         },
         mounted() {
@@ -122,6 +174,18 @@
 </script>
 
 <style scoped>
+    .form-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .switch-user-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
     label {
     font-weight: bold;
     display: block;
@@ -135,7 +199,7 @@
     .ratingErr {
         border-bottom: 1px solid rgb(176, 0, 32);
     }
-    ::v-deep .v-input__details {
+    ::deep .v-input__details {
         display: none !important;
     }
 </style>

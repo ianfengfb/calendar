@@ -3,7 +3,7 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/calendar">Calendar</router-link>
+                    <router-link to="/diary-new">New Diary</router-link>
                 </li>
                 <li>
                     <router-link to="/diary">Diary</router-link>
@@ -14,8 +14,8 @@
 </template>
 
 <style scoped>
-    .header {
-        background-color: #333;
+    header {
+        background-color: #e9e9e9;
         color: white;
         padding: 20px;
         text-align: center;
@@ -24,17 +24,17 @@
 
     header a {
     text-decoration: none;
-    color: #03a9f4;
+    color: #404040;
     display: inline-block;
     padding: 0.75rem 1.5rem;
     border: 1px solid transparent;
     }
 
-    a:active,
+    /* a:active,
     a:hover,
     a.router-link-active {
     border: 1px solid #03a9f4;
-    }
+    } */
 
     h1 {
     margin: 0;
