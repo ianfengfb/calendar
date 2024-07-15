@@ -15,12 +15,22 @@ const router = createRouter({
       component: CalendarPage
     },
     {
-      path: '/diary-new',
-      component: NewDiary
-    },
-    {
-      path: '/diary',
-      component: DiariesPage
+      path: '/diaries',
+      children: [
+        {
+          path: '',
+          component: DiariesPage
+        },
+        {
+          path: 'new',
+          component: NewDiary,
+        },
+        {
+          path: 'edit/:id',
+          component: NewDiary,
+          props: true
+        }
+      ]
     }
   ]
 })

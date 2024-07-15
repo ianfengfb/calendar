@@ -33,6 +33,15 @@ export default {
             console.error(error);
         }
     },
+    async getSingleDiary(_, id) {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/diary/${id}`);
+            const responseData = response?.data?.data;
+            return responseData;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     updateDiary({ commit }, diary) {
         commit('updateDiary', diary);
     },

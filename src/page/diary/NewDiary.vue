@@ -1,7 +1,7 @@
 <template>
     <section>
         <base-card>
-            <new-diary-form></new-diary-form>
+            <new-diary-form :id="id"></new-diary-form>
         </base-card>
     </section>
 </template>
@@ -12,9 +12,7 @@
         components: {
             NewDiaryForm
         },
-        methods: {
-            
-        }
+        props: ['id']
     }
 </script>
 

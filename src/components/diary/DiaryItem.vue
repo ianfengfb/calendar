@@ -46,8 +46,9 @@
             <v-btn 
                 rounded="lg" 
                 block
-                color="primary"
+                color="#e9e9e9"
                 class="mt-3"
+                :to="`/diaries/edit/${data.id}`"
             >Edit</v-btn>
         </div>
     </div>

@@ -3,10 +3,10 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/diary-new">New Diary</router-link>
+                    <router-link to="/diaries/new">New Diary</router-link>
                 </li>
                 <li>
-                    <router-link to="/diary">Diary</router-link>
+                    <router-link to="/diaries">Diary</router-link>
                 </li>
             </ul>
         </nav>
