@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CalendarPage from '@/page/calendar/CalendarPage.vue'
 import NewDiary from '@/page/diary/NewDiary.vue'
+import NewBudget from '@/page/budget/NewBudget.vue'
+import BudgetSettings from '@/page/budget/BudgetSettings.vue'
 import DiariesPage from '@/page/diary/DiariesPage.vue'
 
 const router = createRouter({
@@ -30,6 +32,19 @@ const router = createRouter({
           component: NewDiary,
           props: true
         }
+      ]
+    },
+    {
+      path: '/budgets',
+      children: [
+        {
+          path: 'new',
+          component: NewBudget,
+        },
+        {
+          path: 'settings',
+          component: BudgetSettings,
+        },
       ]
     }
   ]

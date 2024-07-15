@@ -40,7 +40,7 @@
                             dark
                             v-bind="props"
                             >
-                                Budget
+                                Expense
                             </v-btn>
                         </template>
                         <v-list>
@@ -71,8 +71,8 @@
                     { title: 'Diaries', path: '/diaries'},
                 ],
                 budgets: [
-                    { title: 'New Budget', path: '/budgets/new'},
-                    { title: 'Budgets', path: '/budgets'},
+                    { title: 'New Expense', path: '/budgets/new'},
+                    { title: 'Budgets Settings', path: '/budgets/settings'},
                 ]
             }
         }

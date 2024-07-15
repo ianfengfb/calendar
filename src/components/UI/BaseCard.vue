@@ -12,9 +12,17 @@
         margin: 2rem auto;
         width: 50%;
     }
+    .w--80 {
+        width: 80%;
+        padding: 3rem;
+    }
     @media screen and (max-width: 768px) {
         .card {
             width: 95%;
+        }
+        .w--80 {
+            width: 95%;
+            padding: 1rem;
         }
     }
 </style>
