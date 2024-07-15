@@ -3,15 +3,81 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/diaries/new">New Diary</router-link>
+                    <v-btn
+                    color="#e9e9e9"
+                    dark
+                    v-bind="props"
+                    >
+                        <router-link :to="dashboard.path">{{ dashboard.title }}</router-link>
+                    </v-btn>
                 </li>
                 <li>
-                    <router-link to="/diaries">Diary</router-link>
+                    <v-menu location="bottom" open-on-hover>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                            color="#e9e9e9"
+                            dark
+                            v-bind="props"
+                            >
+                                Diary
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                            v-for="diary in diaries"
+                            :key="diary"
+                            >
+                                <router-link :to="diary.path">{{ diary.title }}</router-link>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </li>
+                <li>
+                    <v-menu location="bottom" open-on-hover>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                            color="#e9e9e9"
+                            dark
+                            v-bind="props"
+                            >
+                                Budget
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                            v-for="budget in budgets"
+                            :key="budget"
+                            >
+                                <router-link :to="budget.path">{{ budget.title }}</router-link>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                dashboard: {
+                    title: 'Dashboard',
+                    path: '/dashboard'
+                },
+                diaries: [
+                    { title: 'New Diary', path: '/diaries/new'},
+                    { title: 'Diaries', path: '/diaries'},
+                ],
+                budgets: [
+                    { title: 'New Budget', path: '/budgets/new'},
+                    { title: 'Budgets', path: '/budgets'},
+                ]
+            }
+        }
+    }
+</script>
 
 <style scoped>
     header {
@@ -26,8 +92,6 @@
     text-decoration: none;
     color: #404040;
     display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid transparent;
     }
 
     /* a:active,
@@ -66,6 +130,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     }
 
     li {
