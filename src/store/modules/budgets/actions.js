@@ -35,4 +35,27 @@ export default {
             console.error(error);
         }
     },
+    async addExpense({ dispatch }, expense) {
+        dispatch('global/clearAlert', null,{ root: true });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/expense-item', expense);
+            const responseData = response?.data?.data;
+            dispatch('global/createAlert', {
+                title: 'Expense added successfully!',
+                type: 'success'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+        } catch (error) {
+            const errorData = error?.response;
+            dispatch('global/createAlert', {
+                title: errorData?.message || 'Failed to save!',
+                type: 'error'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+        }
+    }
 }

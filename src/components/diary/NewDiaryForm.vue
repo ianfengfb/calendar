@@ -75,7 +75,7 @@
             size="x-large" 
             block
             color="#e9e9e9"
-            @click="saveDiary"
+            @click="submitDiary"
             class="mt-3"
         >{{btnText}}</v-btn>
     </template>
@@ -231,7 +231,7 @@
     .ratingErr {
         border-bottom: 1px solid rgb(176, 0, 32);
     }
-    ::deep .v-input__details {
+    :deep(.v-input__details) {
         display: none !important;
     }
 </style>
