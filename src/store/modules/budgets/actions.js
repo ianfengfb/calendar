@@ -26,9 +26,9 @@ export default {
             }, 3000);
         }
     },
-    async fetchBudgetTypes({ commit }) {
+    async fetchBudgetTypes({ commit }, page) {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/budget-types');
+            const response = await axios.get(`http://127.0.0.1:8000/api/budget-types/${page}`);
             const responseData = response?.data?.data;
             commit('fetchBudgetTypes', responseData);
         } catch (error) {

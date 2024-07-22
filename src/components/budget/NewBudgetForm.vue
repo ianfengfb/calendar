@@ -86,7 +86,7 @@
             }
         },
         mounted() {
-            this.$store.dispatch('budgets/fetchBudgetTypes');
+            this.$store.dispatch('budgets/fetchBudgetTypes', 'expense');
         },
         computed: {
             date() {
@@ -115,7 +115,10 @@
                 this.disbaleActions = true;
                 try {
                     const result = await this.$store.dispatch('budgets/addBudgetType', data);
-                    this.type = result.id;
+                    this.type = {
+                        name: result.name,
+                        id: result.id
+                    };
                 } catch (error) {
                     console.log(error);
                 }
@@ -135,7 +138,7 @@
                 this.btnText = 'Saving...';
                 try {
                     await this.$store.dispatch('budgets/addExpense', data);
-                    resetForm();
+                    this.resetForm();
                 } catch (error) {
                     console.log(error);
                 }

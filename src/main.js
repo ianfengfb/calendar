@@ -13,9 +13,13 @@ import './css/global.css';
 
 import BaseCard from './components/UI/BaseCard.vue';
 import FullWidthCard from './components/UI/FullWidthCard.vue';
+import { VTreeview } from 'vuetify/labs/VTreeview'
 
 const vuetify = createVuetify({
-    components,
+    components: {
+        VTreeview,
+        ...components,
+    },
     directives,
     theme: {
         themes: {

@@ -1,12 +1,17 @@
 <template>
     <section>
         <base-card class="w--80">
-            <v-expansion-panels>
-                <v-expansion-panel
-                    title="Budget Types"
-                    class="mb-10"
-                ></v-expansion-panel>
-            </v-expansion-panels>
+            <budget-type-settings></budget-type-settings>
         </base-card>
     </section>
 </template>
+
+<script>
+import BudgetTypeSettings from '@/components/budget/BudgetTypeSettings.vue';
+
+export default {
+    components: {
+        BudgetTypeSettings
+    }
+}
+</script>
