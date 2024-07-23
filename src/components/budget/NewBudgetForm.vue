@@ -43,6 +43,7 @@
         </template>
     </v-combobox>
     <p class="text-err" v-if="!isTypeValid">Please choose a type</p>
+    <p class="text-err" v-if="isDuplicatedType">The type you entered already exists</p>
     <v-text-field
         label="Amount"
         v-model.trim="amount"
@@ -76,6 +77,7 @@
                 showDatePicker: false,
                 type: null,
                 isTypeValid: true,
+                isDuplicatedType: false,
                 note: '',
                 amount: '',
                 isAmountValid: true,
@@ -110,19 +112,21 @@
                 this.showDatePicker = false;
             },
             async addNewType() {
-                let data = new FormData();
-                data.append('name', this.search.trim());
-                this.disbaleActions = true;
-                try {
-                    const result = await this.$store.dispatch('budgets/addBudgetType', data);
-                    this.type = {
-                        name: result.name,
-                        id: result.id
-                    };
-                } catch (error) {
-                    console.log(error);
-                }
-                this.disbaleActions = false;
+                console.log(this.search);
+                if (this.checkIfTypeExist()) return;
+                    let data = new FormData();
+                    data.append('name', this.search.trim());
+                    this.disbaleActions = true;
+                    try {
+                        const result = await this.$store.dispatch('budgets/addBudgetType', data);
+                        this.type = {
+                            name: result.name,
+                            id: result.id
+                        };
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    this.disbaleActions = false;
             },
             async addNewExpense() {
                 this.validateForm();
@@ -133,12 +137,12 @@
                 if (this.note.trim().length > 0) {
                     data.append('note', this.note);
                 }
-                data.append('date', this.datePickerValue.toISOString().split('T')[0]);
+                data.append('date', this.dateToString(this.datePickerValue));
                 this.disbaleActions = true;
                 this.btnText = 'Saving...';
                 try {
                     await this.$store.dispatch('budgets/addExpense', data);
-                    this.resetForm();
+                    // this.resetForm();
                 } catch (error) {
                     console.log(error);
                 }
@@ -146,7 +150,7 @@
                 this.btnText = 'Save';
             },
             validateForm() {
-                if (this.type === null) {
+                if (typeof this.type !== 'object') {
                     this.isTypeValid = false;
                 } else {
                     this.isTypeValid = true;
@@ -167,6 +171,7 @@
             resetForm() {
                 this.type = null;
                 this.isTypeValid = true;
+                this.isDuplicatedType = false;
                 this.amount = '';
                 this.isAmountValid = true;
                 this.isAmountFomratted = true;
@@ -185,7 +190,21 @@
             typeChange() {
                 if (this.type !== null) {
                     this.isTypeValid = true;
+                    this.isDuplicatedType = false;
                 }
+            },
+            dateToString(date) {
+                return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            },
+            checkIfTypeExist() {
+                const result = this.fechedTypes.some(type => type.name.toLowerCase() === this.search.trim().toLowerCase());
+                if (result) {
+                    this.isDuplicatedType = true;
+                    setTimeout(() => {
+                        this.isDuplicatedType = false;
+                    }, 3000);
+                }
+                return result;
             }
         },
     }

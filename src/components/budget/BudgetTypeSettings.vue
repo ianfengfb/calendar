@@ -79,5 +79,15 @@
         }
       ],
     }),
+    mounted() {
+        this.$store.dispatch('budgets/fetchBudgetTypes', 'settings');
+    },
+    computed: {
+        fechedTypes() {
+            const tempTypes = this.$store.getters['budgets/getBudgetTypes'];
+            console.log(tempTypes);
+            return 'aaa';
+        }
+    },
   }
 </script>
