@@ -30,7 +30,11 @@ export default {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/api/budget-types/${page}`);
             const responseData = response?.data?.data;
-            commit('fetchBudgetTypes', responseData);
+            if (page === 'expense') {
+                commit('fetchBudgetTypes', responseData);
+            } else if (page === 'settings') {
+                commit('fetchBudgetTypesSettings', responseData);
+            }
         } catch (error) {
             console.error(error);
         }

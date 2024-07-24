@@ -1,17 +1,17 @@
 <template>
     <section>
         <base-card class="w--80">
-            <budget-type-settings></budget-type-settings>
+            <budget-type-settings-table></budget-type-settings-table>
         </base-card>
     </section>
 </template>
 
 <script>
-import BudgetTypeSettings from '@/components/budget/BudgetTypeSettings.vue';
+import BudgetTypeSettingsTable from '@/components/budget/BudgetTypeSettingsTable.vue';
 
 export default {
     components: {
-        BudgetTypeSettings
+        BudgetTypeSettingsTable
     }
 }
 </script>
