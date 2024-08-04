@@ -143,7 +143,7 @@
                 data.append('user_id', this.user ? 2 : 1);
                 try {
                     await this.$store.dispatch('diaries/addDiary', data);
-                    this.resetForm();
+                    // this.resetForm();
                 } catch (error) {
                     console.log(error);
                 }
