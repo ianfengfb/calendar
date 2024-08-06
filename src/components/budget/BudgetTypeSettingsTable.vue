@@ -41,7 +41,12 @@
                 ></v-text-field>
                 <span v-else>{{ '$' + item.weekly_budget }}</span>
             </td>
-            <td class="text-center">
+            <td class="text-center" v-if="item.editting">
+                <v-icon class="cursor-pointer" @click="editType(item)">
+                    mdi-check
+                </v-icon>
+            </td>
+            <td class="text-center" v-else>
                 <v-icon class="cursor-pointer" @click="editType(item)">
                     mdi-pencil
                 </v-icon>
