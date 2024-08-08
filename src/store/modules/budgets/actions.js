@@ -61,5 +61,30 @@ export default {
                 dispatch('global/clearAlert', null,{ root: true });
             }, 3000);
         }
-    }
+    },
+    async addBudgetParentType({ commit, dispatch }, budgetParentType) {
+        dispatch('global/clearAlert', null,{ root: true });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/budget-parent-type', budgetParentType);
+            const responseData = response?.data?.data;
+            commit('addParentType', responseData);
+            dispatch('global/createAlert', {
+                title: 'Parent type added successfully!',
+                type: 'success'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+            return responseData;
+        }  catch (error) {
+            const errorData = error?.response;
+            dispatch('global/createAlert', {
+                title: errorData?.message || 'Failed to save!',
+                type: 'error'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+        }
+    },
 }

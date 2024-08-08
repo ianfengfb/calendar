@@ -6,6 +6,7 @@ export default {
     namespaced: true,
     state: () => ({
         budgetTypes: [],
+        budgetParentTypes: [],
         budgetTypesSettings: {
             budget_types: [],
             budget_parent_types: []

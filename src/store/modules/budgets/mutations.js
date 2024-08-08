@@ -7,5 +7,9 @@ export default {
     },
     fetchBudgetTypesSettings(state, allTypes) {
         state.budgetTypesSettings = allTypes;
+        state.budgetParentTypes = allTypes.budget_parent_selections;
+    },
+    addParentType(state, parentType) {
+        state.budgetParentTypes.push(parentType);
     }
 }

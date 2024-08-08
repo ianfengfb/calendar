@@ -67,6 +67,7 @@
         :disabled="disbaleActions"
         @click="addNewExpense"
     >{{btnText}}</v-btn>
+    <icon-picker></icon-picker>
 </template>
 
 <script>
@@ -112,7 +113,6 @@
                 this.showDatePicker = false;
             },
             async addNewType() {
-                console.log(this.search);
                 if (this.checkIfTypeExist()) return;
                     let data = new FormData();
                     data.append('name', this.search.trim());

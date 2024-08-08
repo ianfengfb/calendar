@@ -6,6 +6,9 @@ export default {
         return state.budgetTypesSettings.budget_types;
     },
     getBudgetParentTypes(state) {
-        return state.budgetTypesSettings.budget_parent_types
+        return state.budgetTypesSettings.budget_parent_types;
+    },
+    getBudgetParentSelections(state) {
+        return state.budgetParentTypes;
     }
 }
