@@ -3,13 +3,12 @@
         <nav>
             <ul>
                 <li>
-                    <v-btn
+                    <!-- <v-btn
                     color="#e9e9e9"
                     dark
-                    v-bind="props"
-                    >
+                    > -->
                         <router-link :to="dashboard.path">{{ dashboard.title }}</router-link>
-                    </v-btn>
+                    <!-- </v-btn> -->
                 </li>
                 <li>
                     <v-menu location="bottom" open-on-hover>

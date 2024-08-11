@@ -1,26 +1,30 @@
 <template>
     <v-container>
-        <v-row>
+        <dashboard-skeleton v-if="summaryCardsIsFetching"></dashboard-skeleton>
+        <v-row v-else>
             <div class="col-4 my-5">
                 <summary-card
                     icon="mdi-book-account"
-                    number="7"
+                    :number="summaryCards.diariesLastWeek"
                     title="Number of diaries last week"
                 ></summary-card>
             </div>
             <div class="col-4 my-5">
                 <summary-card
                     icon="mdi-cash-multiple"
-                    number="100"
+                    :number="summaryCards.totalExpensesLastWeek"
                     title="Total expenses last week"
                 ></summary-card>
             </div>
             <div class="col-4 my-5">
                 <summary-card
                     icon="mdi-timer-sand"
-                    number="14"
+                    :number="summaryCards.freeHoursLastWeek"
                     title="Number of free hours last week"
                 ></summary-card>
+            </div>
+            <div class="col-6">
+                <expense-calendar></expense-calendar>
             </div>
         </v-row>
     </v-container>
@@ -28,14 +32,25 @@
 
 <script>
     import SummaryCard from '@/components/dashboard/SummaryCard.vue'
+    import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton.vue';
+    import ExpenseCalendar from '@/components/dashboard/ExpenseCalendar.vue';
 
     export default {
         components: {
-            SummaryCard
+            SummaryCard,
+            DashboardSkeleton,
+            ExpenseCalendar
         },
-        data() {
-            return {
-            }
+        mounted() {
+            this.$store.dispatch('dashboard/fetchSummaryCards');
+        },
+        computed: {
+            summaryCards() {
+                return this.$store.getters['dashboard/getSummaryCardsInformation'];
+            },
+            summaryCardsIsFetching() {
+                return this.$store.getters['dashboard/getIsFetchingSummaryCards'];
+            },
         }
     }
 </script>

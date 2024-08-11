@@ -14,11 +14,13 @@ import './css/global.css';
 import BaseCard from './components/UI/BaseCard.vue';
 import FullWidthCard from './components/UI/FullWidthCard.vue';
 import { VTreeview } from 'vuetify/labs/VTreeview'
+import { VCalendar } from 'vuetify/labs/VCalendar'
 import MdiIconPicker from './components/helper/MdiIconPicker.vue';
 
 const vuetify = createVuetify({
     components: {
         VTreeview,
+        VCalendar,
         ...components,
     },
     directives,

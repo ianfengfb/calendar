@@ -1,10 +1,11 @@
 import axios from 'axios';
+import ApiConstants from '@/constants/ApiConstants';
 
 export default {
     async addDiary({ commit, dispatch }, diary) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/diaries', diary);
+            const response = await axios.post(ApiConstants.addDiary, diary);
             const responseData = response?.data;
             dispatch('global/createAlert', {
                 title: 'Diary added successfully!',
@@ -26,7 +27,7 @@ export default {
     },
     async fetchDiaries({ commit }, filter) {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/get-diaries', filter);
+            const response = await axios.post(ApiConstants.fetchDiaries, filter);
             const responseData = response?.data?.data;
             commit('fetchDiaries', responseData);
             return responseData;
@@ -36,7 +37,7 @@ export default {
     },
     async getSingleDiary(_, id) {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/diary/${id}`);
+            const response = await axios.get(`${ApiConstants.getSingleDiary}/${id}`);
             const responseData = response?.data?.data;
             return responseData;
         } catch (error) {

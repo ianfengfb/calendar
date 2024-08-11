@@ -1,10 +1,11 @@
+import ApiConstants from '@/constants/ApiConstants';
 import axios from 'axios';
 
 export default {
     async addBudgetType({ commit, dispatch }, budgetType) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/budget-type', budgetType);
+            const response = await axios.post(ApiConstants.addBudgetType, budgetType);
             const responseData = response?.data?.data;
             commit('addBudgetType', responseData);
             dispatch('global/createAlert', {
@@ -28,7 +29,7 @@ export default {
     },
     async fetchBudgetTypes({ commit }, page) {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/budget-types/${page}`);
+            const response = await axios.get(`${ApiConstants.fetchBudgetTypes}/${page}`);
             const responseData = response?.data?.data;
             if (page === 'expense') {
                 commit('fetchBudgetTypes', responseData);
@@ -42,7 +43,7 @@ export default {
     async addExpense({ dispatch }, expense) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/expense-item', expense);
+            const response = await axios.post(ApiConstants.addExpense, expense);
             const responseData = response?.data?.data;
             dispatch('global/createAlert', {
                 title: 'Expense added successfully!',
@@ -65,7 +66,7 @@ export default {
     async addBudgetParentType({ commit, dispatch }, budgetParentType) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/budget-parent-type', budgetParentType);
+            const response = await axios.post(ApiConstants.addBudgetParentType, budgetParentType);
             const responseData = response?.data?.data;
             commit('addParentType', responseData);
             dispatch('global/createAlert', {
@@ -90,7 +91,7 @@ export default {
     async updateBudgetType({ commit, dispatch }, budgetType) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/update-budget-type', budgetType);
+            const response = await axios.post(ApiConstants.updateBudgetType, budgetType);
             const responseData = response?.data?.data;
             dispatch('global/createAlert', {
                 title: 'Expense type updated successfully!',
