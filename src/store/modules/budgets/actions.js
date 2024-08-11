@@ -87,4 +87,28 @@ export default {
             }, 3000);
         }
     },
+    async updateBudgetType({ commit, dispatch }, budgetType) {
+        dispatch('global/clearAlert', null,{ root: true });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/update-budget-type', budgetType);
+            const responseData = response?.data?.data;
+            dispatch('global/createAlert', {
+                title: 'Expense type updated successfully!',
+                type: 'success'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+            return responseData;
+        }  catch (error) {
+            const errorData = error?.response;
+            dispatch('global/createAlert', {
+                title: errorData?.message || 'Failed to save!',
+                type: 'error'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+        }
+    },
 }

@@ -29,6 +29,7 @@ export default {
             const response = await axios.post('http://127.0.0.1:8000/api/get-diaries', filter);
             const responseData = response?.data?.data;
             commit('fetchDiaries', responseData);
+            return responseData;
         } catch (error) {
             console.error(error);
         }

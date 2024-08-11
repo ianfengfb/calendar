@@ -3,7 +3,12 @@ export default {
         state.diaries.push(diary);
     },
     fetchDiaries(state, diaries) {
-        state.diaries = diaries;
+        state.diaries.push(...diaries);
+        if (diaries.length === 0) {
+            state.noMoreDiaries = true;
+        } else {
+            state.noMoreDiaries = false;
+        }
     },
     updateDiary(state, diary) {
         const index = state.diaries.findIndex(item => item.id === diary.id);

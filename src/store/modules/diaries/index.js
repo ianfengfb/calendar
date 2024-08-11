@@ -5,7 +5,7 @@ import getters from './getters.js';
 export default {
     namespaced: true,
     state: () => ({
-        diaries: []
+        diaries: [],
     }),
     mutations,
     actions,

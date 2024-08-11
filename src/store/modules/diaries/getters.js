@@ -4,5 +4,5 @@ export default {
     },
     getDiaryById: (state) => (id) => {
         return state.diaries.find(diary => diary.id === id);
-    }
+    },
 }

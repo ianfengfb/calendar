@@ -67,7 +67,6 @@
         :disabled="disbaleActions"
         @click="addNewExpense"
     >{{btnText}}</v-btn>
-    <icon-picker></icon-picker>
 </template>
 
 <script>

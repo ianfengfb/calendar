@@ -7,6 +7,8 @@
         <th class="text-center">
         </th>
         <th class="text-center">
+        </th>
+        <th class="text-center">
           Name
         </th>
         <th class="text-center">
@@ -35,7 +37,6 @@
                     v-model="edittingParentType"
                     :disabled="parentDisbaleActions"
                     class="mt-5"
-                    @update:modelValue="typeChange"
                     v-if="!item.isParent"
                 >
                     <template v-slot:no-data>
@@ -58,22 +59,21 @@
                 </v-combobox>
             </td>
             <td v-else></td>
-            <td class="first-col" v-if="!item.editting">
+            <td class="text-center" v-if="!item.editting">
                 <v-icon>
                     {{ item.mdi_code }}
                 </v-icon>
+            </td>
+            <td class="text-center" v-else>
+                <mdi-icon-picker :icon="edittingMdiCode" @changeIcon="changeIconHandler"></mdi-icon-picker>
+            </td>
+            <td class="text-center" v-if="!item.editting">
                 <span :class="item.isParent ? 'ml-2 bold' : 'ml-2'">{{ item.name }}</span>
             </td>
             <td class="text-center" v-else>
-                <v-icon>
-                    {{ item.mdi_code }}
-                </v-icon>
-                <span>
-                    <v-text-field
-                        v-model="edittingName"
-                        width="50%"
-                    ></v-text-field>
-                </span>
+                <v-text-field
+                    v-model="edittingName"
+                ></v-text-field>
             </td>
             <td>
                 <div class="d-flex justify-content-center align-items-center">
@@ -104,7 +104,7 @@
                 </v-icon>
             </td>
             <td class="text-center" v-if="isEditting && item.editting">
-                <v-icon class="cursor-pointer" @click="editType(item)">
+                <v-icon class="cursor-pointer" @click="updateType(item.isParent)">
                     mdi-check
                 </v-icon>
             </td>
@@ -119,6 +119,7 @@
       return {
         isEditting: false,
         edittingId: null,
+        edittingFriendlyId: null,
         edittingParentType: null,
         edittingParentSearch: '',
         edittingMdiCode: '',
@@ -174,38 +175,64 @@
     },
     methods: {
         editType(type) {
-            console.log('edittingObject===',type);
             this.edittingId = type.isParent ? 'parent' + type.id : type.id;
-            this.edittingParentType = type.budget_parent_type_id == null ? null : {id: type.budget_parent_type_id, name: type.parent_name};
-            this.edittingParentSearch = type.budget_parent_type_id  == null ? '' : type.parent_name;
+            this.edittingFriendlyId = type.id;
+            if (!type.isParent) {
+                this.edittingParentType = type.budget_parent_type_id == null ? null : {id: type.budget_parent_type_id, name: type.parent_name};
+                this.edittingParentSearch = type.budget_parent_type_id  == null ? '' : type.parent_name;
+                this.edittingWeeklyBudget = type.weekly_budget;
+            }
             this.edittingMdiCode = type.mdi_code;
             this.edittingColor = type.color;
             this.edittingName = type.name;
-            this.edittingWeeklyBudget = type.weekly_budget;
             this.isEditting = true;
         },
-        typeChange(value) {
-            //console.log(value);
+        changeIconHandler(value) {
+            this.edittingMdiCode = value;
         },
         async addNewType() {
             let data = new FormData();
             data.append('name', this.edittingParentSearch.trim());
             try {
                 const result = await this.$store.dispatch('budgets/addBudgetParentType', data);
-                this.type = {
+                this.edittingParentType = {
                     name: result.name,
                     id: result.id
                 };
+                console.log(this.isEditting);
             } catch (error) {
                 console.log(error);
             }
+        },
+        async updateType(isParent) {
+            let data = new FormData();
+            data.append('isParent', isParent ? 1 : 0);
+            data.append('id', this.edittingFriendlyId);
+            data.append('name', this.edittingName);
+            data.append('mdi_code', this.edittingMdiCode);
+            data.append('color', this.edittingColor);
+            if (!isParent) {
+                data.append('budget_parent_type_id', this.edittingParentType == null ? null : this.edittingParentType.id);
+                data.append('weekly_budget', this.edittingWeeklyBudget);
+            }
+            try {
+                await this.$store.dispatch('budgets/updateBudgetType', data);
+                await this.$store.dispatch('budgets/fetchBudgetTypes', 'settings');
+            } catch (error) {
+                console.log(error);
+            }
+            this.isEditting = false;
+            this.edittingId = null;
+            this.edittingFriendlyId = null;
+            this.edittingParentType = null;
+            this.edittingParentSearch = '';
+            this.edittingMdiCode = '';
+            this.edittingColor = '';
+            this.parentDisbaleActions = false;
+            this.edittingName = '';
+            this.edittingWeeklyBudget = '';
         }
     },
-    watch: {
-        edittingParentType(value) {
-            console.log(value);
-        }
-    }
   }
 </script>
 

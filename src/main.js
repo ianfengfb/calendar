@@ -14,7 +14,7 @@ import './css/global.css';
 import BaseCard from './components/UI/BaseCard.vue';
 import FullWidthCard from './components/UI/FullWidthCard.vue';
 import { VTreeview } from 'vuetify/labs/VTreeview'
-import IconPicker from './components/helper/IconPicker.vue';
+import MdiIconPicker from './components/helper/MdiIconPicker.vue';
 
 const vuetify = createVuetify({
     components: {
@@ -43,6 +43,6 @@ app.use(store);
 
 app.component('base-card', BaseCard);
 app.component('full-width-card', FullWidthCard);
-app.component('icon-picker', IconPicker);
+app.component('mdi-icon-picker', MdiIconPicker);
 
 app.mount('#app');
