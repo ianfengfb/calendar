@@ -11,4 +11,10 @@ export default {
     getExpensesInformation(state) {
         return state.expensesInformation;
     },
+    getIsFetchingDiariesInformation(state) {
+        return state.isFetchingDiariesInformation;
+    },
+    getDiariesInformation(state) {
+        return state.diariesInformation;
+    }
 }

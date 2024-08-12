@@ -23,8 +23,11 @@
                     title="Number of free hours last week"
                 ></summary-card>
             </div>
-            <div class="col-6">
+            <div class="col-6 px-3">
                 <expense-calendar></expense-calendar>
+            </div>
+            <div class="col-6 px-3">
+                <diaries-calendar></diaries-calendar>
             </div>
         </v-row>
     </v-container>
@@ -34,12 +37,14 @@
     import SummaryCard from '@/components/dashboard/SummaryCard.vue'
     import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton.vue';
     import ExpenseCalendar from '@/components/dashboard/ExpenseCalendar.vue';
+    import DiariesCalendar from '@/components/dashboard/DiariesCalendar.vue';
 
     export default {
         components: {
             SummaryCard,
             DashboardSkeleton,
-            ExpenseCalendar
+            ExpenseCalendar,
+            DiariesCalendar
         },
         mounted() {
             this.$store.dispatch('dashboard/fetchSummaryCards');

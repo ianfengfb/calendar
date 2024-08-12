@@ -34,15 +34,30 @@
             return {
             }
         },
+        unmounted() {
+            this.$store.commit('diaries/resetDiaries');
+        },
         computed: {
             diaries() {
                 return this.$store.getters['diaries/getDiaries'];
             },
+            startDate() {
+                return this.$route.query.startDate;
+            },
+            endDate() {
+                return this.$route.query.endDate;
+            }
         },
         methods: {
             async loadDiaries({done}) {
-                let data = new FormData();
-                data.append('offset', this.diaries.length);
+                let data = '/?offset=' + this.diaries.length;
+                if (this.startDate) {
+                    data += '&startDate=' + this.startDate;
+                }
+                if (this.endDate) {
+                    console.log(this.endDate);
+                    data += '&endDate=' + this.endDate;
+                }
                 const result = await this.$store.dispatch('diaries/fetchDiaries', data);
                 if (result.length > 0) {
                     done('ok');

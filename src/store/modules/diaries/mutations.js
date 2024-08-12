@@ -21,5 +21,8 @@ export default {
         if (index !== -1) {
             state.diaries.splice(index, 1);
         }
+    },
+    resetDiaries(state) {
+        state.diaries = [];
     }
 }

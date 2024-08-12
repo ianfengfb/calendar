@@ -22,5 +22,15 @@ export default {
             console.error(error);
         }
     },
+    async fetchDiariesInformation({ commit },date) {
+        commit('fetchDiariesInformationStart');
+        try {
+            const response = await axios.get(`${ApiConstants.fetchDiariesInformation}/${date}`);
+            const responseData = response?.data?.data;
+            commit('fetchDiariesInformationEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     
 }

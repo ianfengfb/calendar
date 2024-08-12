@@ -11,6 +11,7 @@ const apis = {
     getSingleDiary: `${baseUrl}diary`,
     fetchSummaryCards: `${baseUrl}get-summary-card-information`,
     fetchExpensesInformation: `${baseUrl}get-expenses-information`,
+    fetchDiariesInformation: `${baseUrl}get-diaries-information`,
 }
 
 export default apis;

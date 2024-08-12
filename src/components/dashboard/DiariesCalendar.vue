@@ -1,9 +1,9 @@
 <template>
-    <div class="calendar-heading" v-if="expensesInformationIsFetching">
+    <div class="calendar-heading" v-if="diariesInformationIsFetching">
         Loading...
     </div>
     <div class="calendar-heading" v-else>
-        Monthly <span class="expenses">Expenses</span>: ${{totalExpenses}}
+        Monthly <span class="diaries">Diaries</span>: {{totalDiaries}}
     </div>
     <v-calendar
         ref="calendar"
@@ -11,16 +11,17 @@
         :events="formattedEvents"
         view-mode="month"
         @update:modelValue="dateChange"
+        @click:event="showDiary"
     >
     <template
         v-slot:event="{ event }"
     >
         <v-chip
-            v-text="event.title"
+            :to="{path: '/diaries', query: {endDate: event.date}}"
         ></v-chip>
     </template>
     </v-calendar>
-  </template>
+</template>
 
 <script>
   export default {
@@ -28,29 +29,29 @@
       value: [new Date()],
     }),
     mounted() {
-        this.$store.dispatch('dashboard/fetchExpensesInformation', this.formatDate(this.value[0]));
+        this.$store.dispatch('dashboard/fetchDiariesInformation', this.formatDate(this.value[0]));
     },
     computed: {
         getterEvents() {
-            return this.$store.getters['dashboard/getExpensesInformation'];
+            return this.$store.getters['dashboard/getDiariesInformation'];
         },
         formattedEvents() {
             return this.getterEvents.map(event => {
                 return {
-                    title: `$${event.amount}`,
+                    title: 'diary',
                     start: new Date(`${event.date}T00:00:00`),
                     end: new Date(`${event.date}T23:59:59`),
                     color: 'red',
-                    allDay: true
+                    allDay: true,
+                    date: event.date,
                 }
             });
         },
-        totalExpenses() {
-            const total = this.getterEvents.reduce((acc, event) => acc + parseFloat(event.amount), 0);
-            return total.toFixed(2);
+        totalDiaries() {
+            return this.getterEvents.length;
         },
-        expensesInformationIsFetching() {
-            return this.$store.getters['dashboard/getIsFetchingExpensesInformation'];
+        diariesInformationIsFetching() {
+            return this.$store.getters['dashboard/getIsFetchingDiariesInformation'];
         }
     },
     methods: {
@@ -58,7 +59,15 @@
             return date.toISOString().split('T')[0];
         },
         dateChange(date) {
-            this.$store.dispatch('dashboard/fetchExpensesInformation', this.formatDate(date[0]));
+            this.$store.dispatch('dashboard/fetchDiariesInformation', this.formatDate(date[0]));
+        },
+        showDiary(event) {
+            console.log(event);
+            // const date = event.start.toISOString().split('T')[0];
+            // const diary = this.getterEvents.find(diary => diary.date === date);
+            // if (diary) {
+            //     this.$router.push({ name: 'diary', params: { id: diary.id } });
+            // }
         }
     },
   }
@@ -71,8 +80,8 @@
         margin-bottom: 20px;
         text-align: center;
     }
-    .expenses {
-        color: rgb(3, 169, 244)
+    .diaries {
+        color: #e73939;
     }
     :deep(.v-calendar-month__day) {
         min-height: 60px !important;
@@ -85,8 +94,14 @@
        display: flex;
        justify-content: center;
        align-items: center;
-       background-color: rgb(57, 167, 231, 0.5);
+       background-color: #e73939;
+       opacity: 0.5;
        cursor: pointer;
-       color: #057cec;
+    }
+    :deep(.v-calendar-month__day .v-chip:hover) {
+       opacity: 1;
+    }
+    :deep(.v-calendar-month__day .v-chip__content) {
+       opacity: 0;
     }
 </style>

@@ -27,7 +27,7 @@ export default {
     },
     async fetchDiaries({ commit }, filter) {
         try {
-            const response = await axios.post(ApiConstants.fetchDiaries, filter);
+            const response = await axios.get(ApiConstants.fetchDiaries + filter);
             const responseData = response?.data?.data;
             commit('fetchDiaries', responseData);
             return responseData;

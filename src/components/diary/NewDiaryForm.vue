@@ -132,7 +132,7 @@
             async saveDiary() {
                 this.isSaving = true;
                 let data = new FormData();
-                data.append('date', this.datePickerValue.toISOString().split('T')[0]);
+                data.append('date', this.formatDate(this.datePickerValue));
                 data.append('note', this.note);
                 if (this.files !== null) {
                     this.files.forEach(file => {
@@ -171,6 +171,12 @@
                 this.note = result.note;
                 this.rating = result.mood;
                 this.isFetching = false;
+            },
+            formatDate(date) {
+                let year = date.getFullYear();
+                let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                let day = date.getDate().toString().padStart(2, '0');
+                return `${year}-${month}-${day}`;
             }
         },
         computed: {

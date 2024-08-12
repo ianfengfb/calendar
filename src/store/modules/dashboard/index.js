@@ -9,6 +9,8 @@ export default {
         summaryCardsInformation: {},
         isFetchingExpensesInformation: false,
         expensesInformation: [],
+        isFetchingDiariesInformation: false,
+        diariesInformation: [],
     }),
     mutations,
     actions,
