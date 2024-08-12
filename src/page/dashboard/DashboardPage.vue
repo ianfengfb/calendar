@@ -29,6 +29,11 @@
             <div class="col-6 px-3">
                 <diaries-calendar></diaries-calendar>
             </div>
+            <div class="col-6 px-3">
+                <full-width-card>
+                    <expense-bar-chart></expense-bar-chart>
+                </full-width-card>
+            </div>
         </v-row>
     </v-container>
 </template>
@@ -38,13 +43,15 @@
     import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton.vue';
     import ExpenseCalendar from '@/components/dashboard/ExpenseCalendar.vue';
     import DiariesCalendar from '@/components/dashboard/DiariesCalendar.vue';
+    import ExpenseBarChart from '@/components/dashboard/ExpenseBarChart.vue';
 
     export default {
         components: {
             SummaryCard,
             DashboardSkeleton,
             ExpenseCalendar,
-            DiariesCalendar
+            DiariesCalendar,
+            ExpenseBarChart
         },
         mounted() {
             this.$store.dispatch('dashboard/fetchSummaryCards');
