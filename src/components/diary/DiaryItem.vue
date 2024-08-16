@@ -12,7 +12,7 @@
                 <p class="readMore" @click="toggleReadMore" :style="{cursor: showReadMore ? 'pointer' : 'auto'}">{{showReadMore ? readMoreText : ' '}}</p>
             </div>
             <div>
-                <v-row>
+                <v-row v-if="data.diary_images.length > 0">
                     <v-col
                         v-for="image in data.diary_images"
                         class="d-flex child-flex mb-3 p-1 cursor-pointer"
@@ -22,6 +22,28 @@
                     >
                         <v-img
                             :src="image.image_thumbnail_url"
+                            aspect-ratio="1"
+                            class="bg-grey-lighten-2"
+                        >
+                            <template v-slot:placeholder>
+                                <v-row
+                                    align="center"
+                                    class="fill-height ma-0"
+                                    justify="center"
+                                >
+                                    <v-progress-circular
+                                        color="grey-lighten-5"
+                                        indeterminate
+                                    ></v-progress-circular>
+                                </v-row>
+                            </template>
+                        </v-img>
+                    </v-col>
+                </v-row>
+                <v-row v-else>
+                    <v-col cols="12">
+                        <v-img
+                            src="https://res.cloudinary.com/dvmlczwti/image/upload/c_thumb,w_200,g_face/v1723850323/noimg_bq847l.png"
                             aspect-ratio="1"
                             class="bg-grey-lighten-2"
                         >
