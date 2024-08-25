@@ -32,5 +32,15 @@ export default {
             console.error(error);
         }
     },
+    async fetchExpensesBarChart({ commit }, period) {
+        commit('fetchExpensesBarChartStart');
+        try {
+            const response = await axios.get(`${ApiConstants.fetchExpensesBarChart}/${period}`);
+            const responseData = response?.data?.data;
+            commit('fetchExpensesBarChartEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
 }

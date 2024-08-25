@@ -16,5 +16,11 @@ export default {
     },
     getDiariesInformation(state) {
         return state.diariesInformation;
+    },
+    getIsFetchingExpensesBarChart(state) {
+        return state.isFetchingExpensesBarChart;
+    },
+    getExpensesBarChart(state) {
+        return state.expensesBarChart;
     }
 }

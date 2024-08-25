@@ -30,7 +30,7 @@
                 <diaries-calendar></diaries-calendar>
             </div>
             <div class="col-6 px-3">
-                <full-width-card>
+                <full-width-card class="expense-chart">
                     <expense-bar-chart></expense-bar-chart>
                 </full-width-card>
             </div>
@@ -66,3 +66,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .expense-chart {
+        min-height: 600px;
+    }
+</style>

@@ -20,4 +20,11 @@ export default {
         state.isFetchingDiariesInformation = false;
         state.diariesInformation = diariesInformation;
     },
+    fetchExpensesBarChartStart(state) {
+        state.isFetchingExpensesBarChart = true;
+    },
+    fetchExpensesBarChartEnd(state, expensesBarChart) {
+        state.isFetchingExpensesBarChart = false;
+        state.expensesBarChart = expensesBarChart;
+    }
 }

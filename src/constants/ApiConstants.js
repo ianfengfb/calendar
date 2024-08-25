@@ -12,6 +12,7 @@ const apis = {
     fetchSummaryCards: `${baseUrl}get-summary-card-information`,
     fetchExpensesInformation: `${baseUrl}get-expenses-information`,
     fetchDiariesInformation: `${baseUrl}get-diaries-information`,
+    fetchExpensesBarChart: `${baseUrl}get-expensese-bar-chart-data`,
 }
 
 export default apis;

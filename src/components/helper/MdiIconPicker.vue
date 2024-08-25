@@ -657,6 +657,10 @@
                         "mdi-face-man-shimmer",
                         "mdi-car-settings",
                         "mdi-medical-bag",
+                        "mdi-office-building",
+                        "mdi-doctor",
+                        "mdi-car-clock",
+                        "mdi-medication",
 
                 ],
             }
