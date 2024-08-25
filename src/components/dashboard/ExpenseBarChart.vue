@@ -1,12 +1,10 @@
 <template>
-    <v-row v-if="expensesBarChartIsFetching || expensesBarLineIsFetching">
-      <div class="col-12">Loading...</div>
-    </v-row>
-    <v-row v-else>
+    <v-row >
       <div class="col-12">
         <v-tabs
           v-model="tab"
           bg-color="#e9e9e9"
+          fixed-tabs
           @update:model-value="tabChangeHandler"
         >
           <v-tab value="month">Month</v-tab>
@@ -17,7 +15,10 @@
       </div>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="month">
-          <v-row>
+          <v-row v-if="expensesBarChartIsFetching">
+            <div class="col-12 text-center">Loading...</div>
+          </v-row>
+          <v-row v-else>
             <div class="col-12">
               <Bar
                 id="expense-chart-id"
@@ -43,7 +44,10 @@
         </v-tabs-window-item>
 
         <v-tabs-window-item value="week">
-          <v-row>
+          <v-row v-if="expensesBarChartIsFetching">
+            <div class="col-12 text-center">Loading...</div>
+          </v-row>
+          <v-row v-else>
             <div class="col-12">
               <Bar
                 id="expense-chart-id"
@@ -69,18 +73,26 @@
         </v-tabs-window-item>
 
         <v-tabs-window-item value="monthly">
+          <v-row v-if="expensesBarChartIsFetching">
+            <div class="col-12 text-center">Loading...</div>
+          </v-row>
           <Line 
             id="line-chart-monthly-id"
             :data="lineChartData" 
             :options="lineChartOptions" 
+            v-else
           />
         </v-tabs-window-item>
 
         <v-tabs-window-item value="weekly">
+          <v-row v-if="expensesBarChartIsFetching">
+            <div class="col-12 text-center">Loading...</div>
+          </v-row>
           <Line 
             id="line-chart-weekly-id"
             :data="lineChartData" 
             :options="lineChartOptions" 
+            v-else
           />
         </v-tabs-window-item>
       </v-tabs-window>
