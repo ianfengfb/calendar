@@ -15,29 +15,55 @@
       </div>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="month">
-            <Bar
-              id="expense-chart-id"
-              :options="chartOptions"
-              :data="chartData"
-            />
-            <Bar
-              id="total-chart-id"
-              :options="totalChartOptions"
-              :data="totalChartData"
-            />
+          <v-row>
+            <div class="col-12">
+              <Bar
+                id="expense-chart-id"
+                :options="chartOptions"
+                :data="chartData"
+              />
+            </div>
+            <div class="col-6">
+              <Bar
+                id="total-chart-id"
+                :options="totalChartOptions"
+                :data="totalChartData"
+              />
+            </div>
+            <div class="col-6">
+              <Pie 
+                id="pie-chart-id"
+                :data="pieChartData" 
+                :options="pieChartOptions" 
+              />
+            </div>
+          </v-row>
         </v-tabs-window-item>
 
         <v-tabs-window-item value="week">
-          <Bar
-              id="expense-chart-id"
-              :options="chartOptions"
-              :data="chartData"
-            />
-            <Bar
-              id="total-chart-id"
-              :options="totalChartOptions"
-              :data="totalChartData"
-            />
+          <v-row>
+            <div class="col-12">
+              <Bar
+                id="expense-chart-id"
+                :options="chartOptions"
+                :data="chartData"
+              />
+            </div>
+            <div class="col-6">
+              <Bar
+                id="total-chart-id"
+                :options="totalChartOptions"
+                :data="totalChartData"
+              />
+            </div>
+            <div class="col-6">
+              <Pie 
+                id="pie-chart-id"
+                :data="pieChartData" 
+                :options="pieChartOptions" 
+              />
+            </div>
+          </v-row>
         </v-tabs-window-item>
       </v-tabs-window>
       
@@ -45,38 +71,18 @@
   </template>
   
   <script>
-  import { Bar } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+  import { Bar, Pie } from 'vue-chartjs'
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement } from 'chart.js'
+
   
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement)
   
   export default {
-    components: { Bar },
+    components: { Bar, Pie },
     data() {
       return {
-        chartOptions: {
+        pieChartOptions: {
           responsive: true,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            title: {
-              display: true,
-              text: 'Monthly Expenses and Budgets'
-            }
-          }
-        },
-        totalChartOptions: {
-          responsive: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-            title: {
-              display: true,
-              text: 'Monthly Total'
-            }
-          }
         },
         tab: 'month'
       }
@@ -85,6 +91,34 @@
       this.$store.dispatch('dashboard/fetchExpensesBarChart', 'month');
     },
     computed: {
+      chartOptions() {
+        return {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: this.tab === 'month' ? 'Monthly Expenses and Budgets' : 'Weekly Expenses and Budgets'
+            }
+          }
+        }
+      },
+      totalChartOptions() {
+        return {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: this.tab === 'month' ? 'Monthly Total' : 'Weekly Total'
+            }
+          }
+        }
+      },
       expensesBarChart() {
         return this.$store.getters['dashboard/getExpensesBarChart'];
       },
@@ -130,6 +164,22 @@
           ]
         }
       },
+      pieChartData() {
+        if (!this.expensesBarChart.chartLabels) return {
+          labels: [],
+          datasets: []
+        };
+        const chartLabels = this.expensesBarChart.chartLabels;
+        return {
+          labels: chartLabels,
+          datasets: [
+            {
+              backgroundColor: chartLabels.map(label => this.expensesBarChart.chartExpenseData[label].color),
+              data: chartLabels.map(label => this.expensesBarChart.chartExpenseData[label].total_amount)
+            }
+          ]
+        }
+      }
     },
     methods: {
       tabChangeHandler() {
