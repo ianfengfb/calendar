@@ -13,6 +13,7 @@ const apis = {
     fetchExpensesInformation: `${baseUrl}get-expenses-information`,
     fetchDiariesInformation: `${baseUrl}get-diaries-information`,
     fetchExpensesBarChart: `${baseUrl}get-expensese-bar-chart-data`,
+    fetchExpensesLineChart: `${baseUrl}get-expensese-line-chart-data`,
 }
 
 export default apis;

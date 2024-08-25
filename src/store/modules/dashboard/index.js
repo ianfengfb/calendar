@@ -13,6 +13,8 @@ export default {
         diariesInformation: [],
         isFetchingExpensesBarChart: false, 
         expensesBarChart: {},
+        isFetchingExpensesLineChart: false, 
+        expensesLineChart: {},
     }),
     mutations,
     actions,

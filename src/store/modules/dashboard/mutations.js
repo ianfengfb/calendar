@@ -26,5 +26,12 @@ export default {
     fetchExpensesBarChartEnd(state, expensesBarChart) {
         state.isFetchingExpensesBarChart = false;
         state.expensesBarChart = expensesBarChart;
+    },
+    fetchExpensesLineChartStart(state) {
+        state.isFetchingExpensesLineChart = true;
+    },
+    fetchExpensesLineChartEnd(state, expensesLineChart) {
+        state.isFetchingExpensesLineChart = false;
+        state.expensesLineChart = expensesLineChart;
     }
 }

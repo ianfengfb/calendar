@@ -1,5 +1,5 @@
 <template>
-    <v-row v-if="expensesBarChartIsFetching">
+    <v-row v-if="expensesBarChartIsFetching || expensesBarLineIsFetching">
       <div class="col-12">Loading...</div>
     </v-row>
     <v-row v-else>
@@ -11,6 +11,8 @@
         >
           <v-tab value="month">Month</v-tab>
           <v-tab value="week">Week</v-tab>
+          <v-tab value="monthly">Monthly Trends</v-tab>
+          <v-tab value="weekly">Weekly Trends</v-tab>
         </v-tabs>
       </div>
       <v-tabs-window v-model="tab">
@@ -65,20 +67,36 @@
             </div>
           </v-row>
         </v-tabs-window-item>
+
+        <v-tabs-window-item value="monthly">
+          <Line 
+            id="line-chart-monthly-id"
+            :data="lineChartData" 
+            :options="lineChartOptions" 
+          />
+        </v-tabs-window-item>
+
+        <v-tabs-window-item value="weekly">
+          <Line 
+            id="line-chart-weekly-id"
+            :data="lineChartData" 
+            :options="lineChartOptions" 
+          />
+        </v-tabs-window-item>
       </v-tabs-window>
       
     </v-row>
   </template>
   
   <script>
-  import { Bar, Pie } from 'vue-chartjs'
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement } from 'chart.js'
+  import { Bar, Pie, Line } from 'vue-chartjs'
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement } from 'chart.js'
 
   
-  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement)
+  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement, PointElement, LineElement )
   
   export default {
-    components: { Bar, Pie },
+    components: { Bar, Pie, Line },
     data() {
       return {
         pieChartOptions: {
@@ -179,11 +197,63 @@
             }
           ]
         }
+      },
+      expensesLineChart() {
+        return this.$store.getters['dashboard/getExpensesLineChart'];
+      },
+      expensesBarLineIsFetching() {
+        return this.$store.getters['dashboard/getIsFetchingExpensesLineChart'];
+      },
+      lineChartData() {
+        if (!this.expensesLineChart.chartLabels) return {
+          labels: [],
+          datasets: []
+        };
+        const chartLabels = this.expensesLineChart.chartLabels;
+        return {
+          labels: chartLabels,
+          datasets: [
+            {
+              label: 'Expenses',
+              backgroundColor: '#057cec',
+              borderColor: '#057cec',
+              data: chartLabels.map(label => this.expensesLineChart.chartExpenseData[label])
+            },
+            {
+              label: 'Budgets',
+              backgroundColor: '#e9e9e9',
+              borderColor: '#e9e9e9',
+              data: chartLabels.map(label => this.expensesLineChart.chartBudgetData[label])
+            }
+          ]
+        }
+      },
+      lineChartOptions() {
+        return {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+            },
+            title: {
+              display: true,
+              text: this.tab === 'monthly' ? 'Monthly Expenses Trends' : 'Weekly Expenses Trends'
+            }
+          }
+        }
       }
     },
     methods: {
       tabChangeHandler() {
-        this.$store.dispatch('dashboard/fetchExpensesBarChart', this.tab);
+        if (this.tab === 'month') {
+          this.$store.dispatch('dashboard/fetchExpensesBarChart', 'month');
+        } else if (this.tab === 'week') {
+          this.$store.dispatch('dashboard/fetchExpensesBarChart', 'week');
+        } else if (this.tab === 'monthly') {
+          this.$store.dispatch('dashboard/fetchExpensesLineChart', 'monthly');
+        } else if (this.tab === 'weekly') {
+          this.$store.dispatch('dashboard/fetchExpensesLineChart', 'weekly');
+        }
       }
     }
   }

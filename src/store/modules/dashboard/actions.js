@@ -41,6 +41,16 @@ export default {
         } catch (error) {
             console.error(error);
         }
+    },
+    async fetchExpensesLineChart({ commit }, period) {
+        commit('fetchExpensesLineChartStart');
+        try {
+            const response = await axios.get(`${ApiConstants.fetchExpensesLineChart}/${period}`);
+            const responseData = response?.data?.data;
+            commit('fetchExpensesLineChartEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
     }
     
 }

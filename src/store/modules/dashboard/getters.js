@@ -22,5 +22,11 @@ export default {
     },
     getExpensesBarChart(state) {
         return state.expensesBarChart;
-    }
+    },
+    getIsFetchingExpensesLineChart(state) {
+        return state.isFetchingExpensesLineChart;
+    },
+    getExpensesLineChart(state) {
+        return state.expensesLineChart;
+    },
 }
