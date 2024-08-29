@@ -51,6 +51,26 @@ export default {
         } catch (error) {
             console.error(error);
         }
+    },
+    async fetchDiariesShowCase({ commit }, type) {
+        commit('fetchDiariesShowCaseStart');
+        try {
+            const response = await axios.get(`${ApiConstants.fetchDiariesShowCase}/${type}`);
+            const responseData = response?.data?.data;
+            commit('fetchDiariesShowCaseEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    async fetchMoodChart({ commit }, period) {
+        commit('fetchMoodChartStart');
+        try {
+            const response = await axios.get(`${ApiConstants.fetchMoodChart}/${period}`);
+            const responseData = response?.data?.data;
+            commit('fetchMoodChartEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
     }
     
 }

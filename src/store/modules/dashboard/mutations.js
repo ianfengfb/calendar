@@ -33,5 +33,19 @@ export default {
     fetchExpensesLineChartEnd(state, expensesLineChart) {
         state.isFetchingExpensesLineChart = false;
         state.expensesLineChart = expensesLineChart;
+    },
+    fetchDiariesShowCaseStart(state) {
+        state.isFetchingDiariesShowCase = true;
+    },
+    fetchDiariesShowCaseEnd(state, diariesShowCase) {
+        state.isFetchingDiariesShowCase = false;
+        state.diariesShowCase = diariesShowCase;
+    },
+    fetchMoodChartStart(state) {
+        state.isFetchingMoodChart = true;
+    },
+    fetchMoodChartEnd(state, moodChart) {
+        state.isFetchingMoodChart = false;
+        state.moodChart = moodChart;
     }
 }

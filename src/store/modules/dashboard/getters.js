@@ -29,4 +29,16 @@ export default {
     getExpensesLineChart(state) {
         return state.expensesLineChart;
     },
+    getIsFetchingDiariesShowCase(state) {
+        return state.isFetchingDiariesShowCase;
+    },
+    getDiariesShowCase(state) {
+        return state.diariesShowCase;
+    },
+    getIsFetchingMoodChart(state) {
+        return state.isFetchingMoodChart;
+    },
+    getMoodChart(state) {
+        return state.moodChart;
+    }
 }

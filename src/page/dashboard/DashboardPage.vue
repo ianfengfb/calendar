@@ -34,6 +34,11 @@
                     <expense-bar-chart></expense-bar-chart>
                 </full-width-card>
             </div>
+            <div class="col-6 px-3">
+                <full-width-card>
+                    <diaries-show-case></diaries-show-case>
+                </full-width-card>
+            </div>
         </v-row>
     </v-container>
 </template>
@@ -44,6 +49,7 @@
     import ExpenseCalendar from '@/components/dashboard/ExpenseCalendar.vue';
     import DiariesCalendar from '@/components/dashboard/DiariesCalendar.vue';
     import ExpenseBarChart from '@/components/dashboard/ExpenseBarChart.vue';
+    import DiariesShowCase from '@/components/dashboard/DiariesShowCase.vue';
 
     export default {
         components: {
@@ -51,7 +57,8 @@
             DashboardSkeleton,
             ExpenseCalendar,
             DiariesCalendar,
-            ExpenseBarChart
+            ExpenseBarChart,
+            DiariesShowCase
         },
         mounted() {
             this.$store.dispatch('dashboard/fetchSummaryCards');
@@ -69,6 +76,6 @@
 
 <style scoped>
     .expense-chart {
-        min-height: 600px;
+        min-height: 400px;
     }
 </style>

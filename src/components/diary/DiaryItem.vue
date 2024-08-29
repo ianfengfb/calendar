@@ -1,5 +1,6 @@
 <template>
-    <div class="d-flex flex-column justify-space-between h-100">
+    <div class="no-diary" v-if="data == null">No diary found</div>
+    <div class="d-flex flex-column justify-space-between h-100" v-else>
         <div>
             <div class="date mb-2">
                 {{ data.date }}
@@ -12,7 +13,7 @@
                 <p class="readMore" @click="toggleReadMore" :style="{cursor: showReadMore ? 'pointer' : 'auto'}">{{showReadMore ? readMoreText : ' '}}</p>
             </div>
             <div>
-                <v-row v-if="data.diary_images.length > 0">
+                <v-row v-if="data?.diary_images.length > 0">
                     <v-col
                         v-for="image in data.diary_images"
                         class="d-flex child-flex mb-3 p-1 cursor-pointer"
@@ -87,12 +88,7 @@
 
 <script>
     export default {
-        props: {
-            data: {
-                type: Object,
-                required: true
-            }
-        },
+        props: ['data'],
         data() {
             return {
                 readMore: false,
@@ -124,6 +120,7 @@
             checkNoteHeight() {
                 this.$nextTick(() => {
                     const noteElement = this.$refs.note;
+                    if (!noteElement) return;
                     const originalHeight = noteElement.style.height;
                     noteElement.style.height = 'auto';
                     this.noteExceedsHeight = noteElement.scrollHeight > 48; // 3rem in pixels
@@ -164,5 +161,12 @@
     .lightbox-img {
         height: 80vh;
         object-fit: contain;
+    }
+
+    .no-diary {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 40vh;
     }
 </style>
