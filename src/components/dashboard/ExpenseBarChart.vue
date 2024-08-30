@@ -16,24 +16,32 @@
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="month">
           <v-row v-if="expensesBarChartIsFetching">
-            <div class="col-12 text-center">Loading...</div>
+            <div class="col-12 px-4 text-center">Loading...</div>
           </v-row>
           <v-row v-else>
-            <div class="col-12">
+            <div class="col-12 px-4">
+              <v-switch
+                v-model="includeLoan"
+                :label="includeLoan ? 'Including Loan' : 'Excluding Loan'"
+                hide-details
+                inset
+              ></v-switch>
+            </div>
+            <div class="col-12 px-4">
               <Bar
                 id="expense-chart-id"
                 :options="chartOptions"
                 :data="chartData"
               />
             </div>
-            <div class="col-6">
+            <div class="col-6 ps-4">
               <Bar
                 id="total-chart-id"
                 :options="totalChartOptions"
                 :data="totalChartData"
               />
             </div>
-            <div class="col-6">
+            <div class="col-6 pe-4">
               <Pie 
                 id="pie-chart-id"
                 :data="pieChartData" 
@@ -114,7 +122,8 @@
         pieChartOptions: {
           responsive: true,
         },
-        tab: 'month'
+        tab: 'month',
+        includeLoan: true
       }
     },
     mounted() {
@@ -160,7 +169,10 @@
           labels: [],
           datasets: []
         };
-        const chartLabels = this.expensesBarChart.chartLabels;
+        let chartLabels = this.expensesBarChart.chartLabels;
+        if (!this.includeLoan) {
+          chartLabels = chartLabels.filter(label => label !== 'Loan');
+        }
         return {
           labels: chartLabels,
           datasets: [
@@ -178,18 +190,30 @@
         }
       },
       totalChartData() {
+        if (!this.expensesBarChart.chartLabels) return {
+          labels: [],
+          datasets: []
+        };
+        let totalExpenses = this.expensesBarChart.totalExpenses;
+        let totalBudgets = this.expensesBarChart.totalBudgets;
+        if (!this.includeLoan) {
+          const loanExpense = this.expensesBarChart.chartExpenseData['Loan'].total_amount;
+          totalExpenses -= loanExpense;
+          const loanBudget = this.expensesBarChart.chartBudgetData['Loan'].total_weekly_budget;
+          totalBudgets -= loanBudget;
+        }
         return {
           labels: ['Total'],
           datasets: [
             {
               label: 'Total Expenses',
               backgroundColor: '#3f51b5',
-              data: [this.expensesBarChart.totalExpenses]
+              data: [totalExpenses]
             },
             {
               label: 'Total Budgets',
               backgroundColor: '#e9e9e9',
-              data: [this.expensesBarChart.totalBudgets]
+              data: [totalBudgets]
             }
           ]
         }
@@ -199,7 +223,10 @@
           labels: [],
           datasets: []
         };
-        const chartLabels = this.expensesBarChart.chartLabels;
+        let chartLabels = this.expensesBarChart.chartLabels;
+        if (!this.includeLoan) {
+          chartLabels = chartLabels.filter(label => label !== 'Loan');
+        }
         return {
           labels: chartLabels,
           datasets: [
