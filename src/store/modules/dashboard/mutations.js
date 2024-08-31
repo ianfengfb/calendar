@@ -47,5 +47,5 @@ export default {
     fetchMoodChartEnd(state, moodChart) {
         state.isFetchingMoodChart = false;
         state.moodChart = moodChart;
-    }
+    },
 }

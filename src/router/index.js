@@ -11,7 +11,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/calendar'
+      redirect: '/dashboard'
     },
     {
       path: '/calendar',

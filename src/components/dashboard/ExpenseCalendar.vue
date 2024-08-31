@@ -15,9 +15,15 @@
     <template
         v-slot:event="{ event }"
     >
-        <v-chip
-            v-text="event.title"
-        ></v-chip>
+        <v-tooltip location="top">
+            <template v-slot:activator="{ props }">
+                <v-chip
+                    v-text="event.title"
+                    v-bind="props"
+                ></v-chip>
+            </template>
+            <v-data-table-virtual :items="event.list"></v-data-table-virtual>
+        </v-tooltip>
     </template>
     </v-calendar>
   </template>
@@ -41,6 +47,8 @@
                     start: new Date(`${event.date}T00:00:00`),
                     end: new Date(`${event.date}T23:59:59`),
                     color: 'red',
+                    date: event.date,
+                    list: event.list,
                     allDay: true
                 }
             });
@@ -51,15 +59,21 @@
         },
         expensesInformationIsFetching() {
             return this.$store.getters['dashboard/getIsFetchingExpensesInformation'];
+        },
+        expensesListIsFetching() {
+            return this.$store.getters['dashboard/getIsFetchingExpensesList'];
+        },
+        expensesList() {
+            return this.$store.getters['dashboard/getExpensesList'];
         }
     },
     methods: {
         formatDate(date) {
             return date.toISOString().split('T')[0];
         },
-        dateChange(date) {
+       dateChange(date) {
             this.$store.dispatch('dashboard/fetchExpensesInformation', this.formatDate(date[0]));
-        }
+        },
     },
   }
 </script>
@@ -86,7 +100,7 @@
        justify-content: center;
        align-items: center;
        background-color: rgb(57, 167, 231, 0.5);
-       cursor: pointer;
+       cursor: help;
        color: #057cec;
     }
 </style>

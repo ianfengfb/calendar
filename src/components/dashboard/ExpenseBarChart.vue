@@ -56,21 +56,29 @@
             <div class="col-12 text-center">Loading...</div>
           </v-row>
           <v-row v-else>
-            <div class="col-12">
+            <div class="col-12 px-4">
+              <v-switch
+                v-model="includeLoan"
+                :label="includeLoan ? 'Including Loan' : 'Excluding Loan'"
+                hide-details
+                inset
+              ></v-switch>
+            </div>
+            <div class="col-12 px-4">
               <Bar
                 id="expense-chart-id"
                 :options="chartOptions"
                 :data="chartData"
               />
             </div>
-            <div class="col-6">
+            <div class="col-6 ps-4">
               <Bar
                 id="total-chart-id"
                 :options="totalChartOptions"
                 :data="totalChartData"
               />
             </div>
-            <div class="col-6">
+            <div class="col-6 pe-4">
               <Pie 
                 id="pie-chart-id"
                 :data="pieChartData" 

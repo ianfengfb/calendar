@@ -661,7 +661,7 @@
                         "mdi-doctor",
                         "mdi-car-clock",
                         "mdi-medication",
-
+                        "mdi-parking",
                 ],
             }
         }

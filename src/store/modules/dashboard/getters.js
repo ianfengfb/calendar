@@ -40,5 +40,5 @@ export default {
     },
     getMoodChart(state) {
         return state.moodChart;
-    }
+    },
 }
