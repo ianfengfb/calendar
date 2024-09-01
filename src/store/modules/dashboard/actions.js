@@ -32,10 +32,10 @@ export default {
             console.error(error);
         }
     },
-    async fetchExpensesBarChart({ commit }, period) {
+    async fetchExpensesBarChart({ commit }, {start_date, end_date}) {
         commit('fetchExpensesBarChartStart');
         try {
-            const response = await axios.get(`${ApiConstants.fetchExpensesBarChart}/${period}`);
+            const response = await axios.get(`${ApiConstants.fetchExpensesBarChart}?start_date=${start_date}&end_date=${end_date}`);
             const responseData = response?.data?.data;
             commit('fetchExpensesBarChartEnd', responseData);
         } catch (error) {
