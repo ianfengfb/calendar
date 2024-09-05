@@ -16,6 +16,8 @@ const apis = {
     fetchExpensesLineChart: `${baseUrl}get-expensese-line-chart-data`,
     fetchDiariesShowCase: `${baseUrl}get-diary-show-case`,
     fetchMoodChart: `${baseUrl}get-diary-mood-chart`,
+    fetchSearchContent: `${baseUrl}get-search-result`,
+    fetchSingleItem: `${baseUrl}get-single-item`,
 }
 
 export default apis;

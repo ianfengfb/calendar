@@ -19,25 +19,25 @@
         <v-tabs-window-item value="recent">
             <div class="col-12 text-center" v-if="isFetchingDiariesShowCase">Loading...</div>
             <div class="col-12 p-3" v-else>
-                <diary-item :data="diariesShowCase"></diary-item>
+                <diary-item :data="diariesShowCase" :single="true"></diary-item>
             </div>
         </v-tabs-window-item>
         <v-tabs-window-item value="week">
             <div class="col-12 text-center" v-if="isFetchingDiariesShowCase">Loading...</div>
             <div class="col-12 p-3" v-else>
-                <diary-item :data="diariesShowCase"></diary-item>
+                <diary-item :data="diariesShowCase" :single="true"></diary-item>
             </div>
         </v-tabs-window-item>
         <v-tabs-window-item value="month">
             <div class="col-12 text-center" v-if="isFetchingDiariesShowCase">Loading...</div>
             <div class="col-12 p-3" v-else>
-                <diary-item :data="diariesShowCase"></diary-item>
+                <diary-item :data="diariesShowCase" :single="true"></diary-item>
             </div>
         </v-tabs-window-item>
         <v-tabs-window-item value="year">
             <div class="col-12 text-center" v-if="isFetchingDiariesShowCase">Loading...</div>
             <div class="col-12 p-3" v-else>
-                <diary-item :data="diariesShowCase"></diary-item>
+                <diary-item :data="diariesShowCase" :single="true"></diary-item>
             </div>
         </v-tabs-window-item>
         <v-tabs-window-item value="monthly">

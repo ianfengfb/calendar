@@ -65,7 +65,7 @@
                 </v-row>
             </div>
         </div>
-        <div>
+        <div v-if="!single">
             <v-btn 
                 rounded="lg" 
                 block
@@ -88,7 +88,7 @@
 
 <script>
     export default {
-        props: ['data'],
+        props: ['data', 'single'],
         data() {
             return {
                 readMore: false,

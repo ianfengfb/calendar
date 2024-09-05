@@ -2,6 +2,9 @@
     <v-container>
         <dashboard-skeleton v-if="summaryCardsIsFetching"></dashboard-skeleton>
         <v-row v-else>
+            <div class="col-12">
+                <search-feild></search-feild>
+            </div>
             <div class="col-4 my-5">
                 <summary-card
                     icon="mdi-book-account"
@@ -50,6 +53,7 @@
     import DiariesCalendar from '@/components/dashboard/DiariesCalendar.vue';
     import ExpenseBarChart from '@/components/dashboard/ExpenseBarChart.vue';
     import DiariesShowCase from '@/components/dashboard/DiariesShowCase.vue';
+    import SearchFeild from '@/components/dashboard/SearchFeild.vue';
 
     export default {
         components: {
@@ -58,7 +62,8 @@
             ExpenseCalendar,
             DiariesCalendar,
             ExpenseBarChart,
-            DiariesShowCase
+            DiariesShowCase,
+            SearchFeild
         },
         mounted() {
             this.$store.dispatch('dashboard/fetchSummaryCards');

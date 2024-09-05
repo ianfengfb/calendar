@@ -19,6 +19,10 @@ export default {
         diariesShowCase: null,
         isFetchingMoodChart: false,
         moodChart: {},
+        isFetchingSearchContent: false,
+        searchContent: [],
+        isFetchingSingleItem: false,
+        singleItem: {}
     }),
     mutations,
     actions,

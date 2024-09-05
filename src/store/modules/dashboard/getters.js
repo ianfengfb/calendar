@@ -41,4 +41,16 @@ export default {
     getMoodChart(state) {
         return state.moodChart;
     },
+    getIsFetchingSearchContent(state) {
+        return state.isFetchingSearchContent;
+    },
+    getSearchContent(state) {
+        return state.searchContent;
+    },
+    getIsFetchingSingleItem(state) {
+        return state.isFetchingSingleItem;
+    },
+    getSingleItem(state) {
+        return state.singleItem;
+    }
 }

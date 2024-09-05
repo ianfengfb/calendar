@@ -13,6 +13,7 @@ import './css/global.css';
 
 import BaseCard from './components/UI/BaseCard.vue';
 import FullWidthCard from './components/UI/FullWidthCard.vue';
+import ScrollCard from './components/UI/ScrollCard.vue';
 import { VTreeview } from 'vuetify/labs/VTreeview'
 import { VCalendar } from 'vuetify/labs/VCalendar'
 import MdiIconPicker from './components/helper/MdiIconPicker.vue';
@@ -45,6 +46,7 @@ app.use(store);
 
 app.component('base-card', BaseCard);
 app.component('full-width-card', FullWidthCard);
+app.component('scroll-card', ScrollCard);
 app.component('mdi-icon-picker', MdiIconPicker);
 
 app.mount('#app');

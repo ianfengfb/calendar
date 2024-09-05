@@ -48,4 +48,21 @@ export default {
         state.isFetchingMoodChart = false;
         state.moodChart = moodChart;
     },
+    fetchSearchContentStart(state) {
+        state.isFetchingSearchContent = true;
+    },
+    fetchSearchContentEnd(state, searchContent) {
+        state.isFetchingSearchContent = false;
+        state.searchContent = searchContent;
+    },
+    resetSearchContent(state) {
+        state.searchContent = [];
+    },
+    fetchSingleItemStart(state) {
+        state.isFetchingSingleItem = true;
+    },
+    fetchSingleItemEnd(state, singleItem) {
+        state.isFetchingSingleItem = false;
+        state.singleItem = singleItem;
+    }
 }

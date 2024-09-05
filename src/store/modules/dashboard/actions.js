@@ -72,4 +72,27 @@ export default {
             console.error(error);
         }
     },    
+    async fetchSearchContent({ commit }, searchContent) {
+        commit('fetchSearchContentStart');
+        try {
+            const response = await axios.post(ApiConstants.fetchSearchContent, searchContent);
+            const responseData = response?.data?.data;
+            commit('fetchSearchContentEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+    resetSearchContent({ commit }) {
+        commit('resetSearchContent');
+    },
+    async fetchSingleItem({ commit }, data) {
+        commit('fetchSingleItemStart');
+        try {
+            const response = await axios.post(ApiConstants.fetchSingleItem, data);
+            const responseData = response?.data?.data;
+            commit('fetchSingleItemEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
