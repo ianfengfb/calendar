@@ -6,6 +6,8 @@ export default {
     namespaced: true,
     state: () => ({
         diaries: [],
+        isFetchingDiarySearch: false,
+        diariesSearch: []
     }),
     mutations,
     actions,

@@ -2,9 +2,13 @@ export default {
     addDiary(state, diary) {
         state.diaries.push(diary);
     },
-    fetchDiaries(state, diaries) {
-        state.diaries.push(...diaries);
-        if (diaries.length === 0) {
+    fetchDiaries(state, data) {
+        if (data.dateChange) {
+            state.diaries = data.diaries;
+        } else {
+            state.diaries.push(...data.diaries);
+        }
+        if (data.diaries.length === 0) {
             state.noMoreDiaries = true;
         } else {
             state.noMoreDiaries = false;
@@ -24,5 +28,15 @@ export default {
     },
     resetDiaries(state) {
         state.diaries = [];
+    },
+    searchDiariesStart(state) {
+        state.isFetchingDiarySearch = true;
+    },
+    searchDiariesEnd(state, searchResults) {
+        state.isFetchingDiarySearch = false;
+        state.diariesSearch = searchResults;
+    },
+    resetDiariesSearch(state) {
+        state.diariesSearch = [];
     }
 }

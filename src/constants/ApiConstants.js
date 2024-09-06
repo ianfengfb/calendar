@@ -9,6 +9,7 @@ const apis = {
     addDiary: `${baseUrl}diaries`,
     fetchDiaries: `${baseUrl}get-diaries`,
     getSingleDiary: `${baseUrl}diary`,
+    searchDiaries: `${baseUrl}search-diaries`,
     fetchSummaryCards: `${baseUrl}get-summary-card-information`,
     fetchExpensesInformation: `${baseUrl}get-expenses-information`,
     fetchDiariesInformation: `${baseUrl}get-diaries-information`,

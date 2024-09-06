@@ -25,11 +25,11 @@ export default {
             }, 3000);
         }
     },
-    async fetchDiaries({ commit }, filter) {
+    async fetchDiaries({ commit }, data) {
         try {
-            const response = await axios.get(ApiConstants.fetchDiaries + filter);
+            const response = await axios.get(ApiConstants.fetchDiaries + data.data);
             const responseData = response?.data?.data;
-            commit('fetchDiaries', responseData);
+            commit('fetchDiaries', {diaries: responseData, dateChange: data.dateChange});
             return responseData;
         } catch (error) {
             console.error(error);
@@ -49,5 +49,15 @@ export default {
     },
     deleteDiary({ commit }, id) {
         commit('deleteDiary', id);
+    },
+    async searchDiaries({ commit }, search) {
+        commit('searchDiariesStart');
+        try {
+            const response = await axios.post(ApiConstants.searchDiaries, search);
+            const responseData = response?.data?.data;
+            commit('searchDiariesEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
