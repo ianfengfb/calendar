@@ -94,5 +94,8 @@ export default {
         } catch (error) {
             console.error(error);
         }
+    },
+    resetSingleItem({ commit }) {
+        commit('resetSingleItem');
     }
 }

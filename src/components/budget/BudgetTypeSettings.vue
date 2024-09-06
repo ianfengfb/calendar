@@ -85,7 +85,6 @@
     computed: {
         fechedTypes() {
             const tempTypes = this.$store.getters['budgets/getBudgetTypes'];
-            console.log(tempTypes);
             return 'aaa';
         }
     },

@@ -62,7 +62,6 @@
             this.$store.dispatch('dashboard/fetchDiariesInformation', this.formatDate(date[0]));
         },
         showDiary(event) {
-            console.log(event);
             // const date = event.start.toISOString().split('T')[0];
             // const diary = this.getterEvents.find(diary => diary.date === date);
             // if (diary) {

@@ -199,7 +199,6 @@
                     name: result.name,
                     id: result.id
                 };
-                console.log(this.isEditting);
             } catch (error) {
                 console.log(error);
             }

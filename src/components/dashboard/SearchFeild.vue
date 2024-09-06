@@ -26,13 +26,13 @@
     </v-text-field>
     <v-dialog
       v-model="dialog"
-      width="auto"
+      width="100%"
       scrollable
     >
-        <v-icon class="close-icon" @click="dialog = false" v-if="isFetchingSingleItem && singleItem?.type">mdi-close-circle</v-icon>
-        <v-skeleton-loader type="card" v-if="isFetchingSingleItem && singleItem?.type"></v-skeleton-loader>
+        <v-icon class="close-icon" @click="closeHandler" v-if="isFetchingSingleItem && singleItem?.type">mdi-close-circle</v-icon>
+        <v-skeleton-loader type="card" width="80%" class="p-5 mx-auto" v-if="isFetchingSingleItem && !singleItem?.type"></v-skeleton-loader>
         <scroll-card :class="singleItem.type == 'diary' ? 'w--60' : ''" v-else>
-            <v-icon class="close-icon-inner" @click="dialog = false">mdi-close-circle</v-icon>
+            <v-icon class="close-icon-inner" @click="closeHandler">mdi-close-circle</v-icon>
             <diary-item :data="singleItem.data" :single="true" v-if="singleItem.type == 'diary'"></diary-item>
             <v-data-table-virtual :items="singleItem.data" v-else></v-data-table-virtual>
         </scroll-card>
@@ -41,12 +41,10 @@
 
 <script>
     import DiaryItem from '../diary/DiaryItem.vue';
-import BaseCard from '../UI/BaseCard.vue';
 
     export default {
         components: {
             DiaryItem,
-                BaseCard
         },
         data() {
             return {
@@ -64,13 +62,17 @@ import BaseCard from '../UI/BaseCard.vue';
                 this.$store.dispatch('dashboard/fetchSingleItem', data);
             },
             searchHandler() {
-                if (this.search.length > 3) {
+                if (this.search.length >= 3) {
                     let data = new FormData();
                     data.append('search', this.search);
                     this.$store.dispatch('dashboard/fetchSearchContent', data);
                 } else {
                     this.$store.dispatch('dashboard/resetSearchContent');
                 }
+            },
+            closeHandler() {
+                this.dialog = false;
+                this.$store.dispatch('dashboard/resetSingleItem');
             }
         },
         computed: {
@@ -84,7 +86,9 @@ import BaseCard from '../UI/BaseCard.vue';
                 return this.$store.getters['dashboard/getIsFetchingSearchContent'];
             },
             singleItem() {
-                return this.$store.getters['dashboard/getSingleItem'];
+                const temp = this.$store.getters['dashboard/getSingleItem'];
+                console.log(temp);
+                return temp;
             }
         }
     }
@@ -135,6 +139,10 @@ import BaseCard from '../UI/BaseCard.vue';
         right: 1rem;
         top: 1rem;
         cursor: pointer;
+    }
+
+    .w--60 {
+        width: 60%;
     }
 
 </style>

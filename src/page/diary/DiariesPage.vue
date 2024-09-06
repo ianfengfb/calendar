@@ -55,7 +55,6 @@
                     data += '&startDate=' + this.startDate;
                 }
                 if (this.endDate) {
-                    console.log(this.endDate);
                     data += '&endDate=' + this.endDate;
                 }
                 const result = await this.$store.dispatch('diaries/fetchDiaries', data);

@@ -36,11 +36,16 @@
                     readonly
                     @click="toggleDatePicker('start')"
                   ></v-text-field>
-                  <v-date-picker 
-                      v-if="showDatePickerStart"
-                      v-model="datePickerValueStart"
-                      @update:modelValue="selectDate('start')"
-                  ></v-date-picker>
+                    <v-dialog
+                      v-model="showDatePickerStart"
+                      width="100%"
+                    >
+                      <v-date-picker 
+                          v-model="datePickerValueStart"
+                          @update:modelValue="selectDate('start')"
+                          class="mx-auto"
+                      ></v-date-picker>
+                    </v-dialog>
                 </div>
                 <div class="col-4 p-4">
                   <v-text-field 
@@ -49,11 +54,17 @@
                     readonly
                     @click="toggleDatePicker('end')"
                   ></v-text-field>
-                  <v-date-picker 
-                      v-if="showDatePickerEnd"
-                      v-model="datePickerValueEnd"
-                      @update:modelValue="selectDate('end')"
-                  ></v-date-picker>
+                  <v-dialog
+                    v-model="showDatePickerEnd"
+                    width="100%"
+                  >
+                    <v-date-picker 
+                        v-model="datePickerValueEnd"
+                        @update:modelValue="selectDate('end')"
+                        class="mx-auto"
+                    ></v-date-picker>
+                  </v-dialog>
+
                 </div>
               </v-row>
             </div>
@@ -103,11 +114,6 @@
                     readonly
                     @click="toggleDatePicker('start')"
                   ></v-text-field>
-                  <v-date-picker 
-                      v-if="showDatePickerStart"
-                      v-model="datePickerValueStart"
-                      @update:modelValue="selectDate('start')"
-                  ></v-date-picker>
                 </div>
                 <div class="col-4 p-4">
                   <v-text-field 
@@ -116,11 +122,6 @@
                     readonly
                     @click="toggleDatePicker('end')"
                   ></v-text-field>
-                  <v-date-picker 
-                      v-if="showDatePickerEnd"
-                      v-model="datePickerValueEnd"
-                      @update:modelValue="selectDate('end')"
-                  ></v-date-picker>
                 </div>
               </v-row>
             </div>
@@ -399,8 +400,20 @@
           this.datePickerValueEnd = this.getEndOfTheWeek();
           this.$store.dispatch('dashboard/fetchExpensesBarChart', {start_date: this.dateToFormatYMD(this.datePickerValueStart), end_date: this.dateToFormatYMD(this.datePickerValueEnd)});
         } else if (this.tab === 'monthly') {
+          if (this.weekBarChartTab === 'Custom') {
+            this.weekBarChartTab = 'Week';
+          }
+          if (this.monthBarChartTab === 'Custom') {
+            this.monthBarChartTab = 'Month';
+          }
           this.$store.dispatch('dashboard/fetchExpensesLineChart', 'monthly');
         } else if (this.tab === 'weekly') {
+          if (this.weekBarChartTab === 'Custom') {
+            this.weekBarChartTab = 'Week';
+          }
+          if (this.monthBarChartTab === 'Custom') {
+            this.monthBarChartTab = 'Month';
+          }
           this.$store.dispatch('dashboard/fetchExpensesLineChart', 'weekly');
         }
       },

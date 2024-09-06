@@ -64,5 +64,8 @@ export default {
     fetchSingleItemEnd(state, singleItem) {
         state.isFetchingSingleItem = false;
         state.singleItem = singleItem;
+    },
+    resetSingleItem(state) {
+        state.singleItem = {};
     }
 }
