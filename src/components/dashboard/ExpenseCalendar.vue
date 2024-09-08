@@ -69,7 +69,7 @@
     },
     methods: {
         formatDate(date) {
-            return date.toISOString().split('T')[0];
+            return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
         },
        dateChange(date) {
             this.$store.dispatch('dashboard/fetchExpensesInformation', this.formatDate(date[0]));
