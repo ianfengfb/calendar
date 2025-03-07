@@ -52,6 +52,9 @@
                         </v-list>
                     </v-menu>
                 </li>
+                <li>
+                    <router-link :to="calender.path">{{ calender.title }}</router-link>
+                </li>
             </ul>
         </nav>
     </header>
@@ -72,7 +75,12 @@
                 budgets: [
                     { title: 'New Expense', path: '/budgets/new'},
                     { title: 'Budgets Settings', path: '/budgets/settings'},
-                ]
+                    { title: 'Analysis', path: '/budgets/analysis'},
+                ],
+                calender: {
+                    title: 'Calender',
+                    path: '/calendar'
+                },
             }
         }
     }

@@ -78,6 +78,7 @@
             @click="submitDiary"
             class="mt-3"
         >{{btnText}}</v-btn>
+
     </template>
 </template>
 

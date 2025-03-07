@@ -11,6 +11,8 @@ export default {
             budget_types: [],
             budget_parent_types: []
         },
+        expensesPieChart: {},
+        isFetchingExpensesPieChart: false,
     }),
     mutations,
     actions,

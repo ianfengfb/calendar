@@ -10,5 +10,11 @@ export default {
     },
     getBudgetParentSelections(state) {
         return state.budgetParentTypes;
+    },
+    getExpensesPieChart(state) {
+        return state.expensesPieChart;
+    },
+    isFetchingExpensesPieChart(state) {
+        return state.isFetchingExpensesPieChart;
     }
 }

@@ -112,4 +112,14 @@ export default {
             }, 3000);
         }
     },
+    async fetchExpensesPieChart({ commit }, searchData) {
+        commit('fetchExpensesPieChartStart');
+        try {
+            const response = await axios.post(ApiConstants.fetchExpensesPieChart, searchData);
+            const responseData = response?.data?.data;
+            commit('fetchExpensesPieChartEnd', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

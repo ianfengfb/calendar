@@ -11,5 +11,12 @@ export default {
     },
     addParentType(state, parentType) {
         state.budgetParentTypes.push(parentType);
+    },
+    fetchExpensesPieChartStart(state) {
+        state.isFetchingExpensesPieChart = true;
+    },
+    fetchExpensesPieChartEnd(state, expensesPieChart) {
+        state.isFetchingExpensesPieChart = false;
+        state.expensesPieChart = expensesPieChart;
     }
 }

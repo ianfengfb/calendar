@@ -3,6 +3,7 @@ import CalendarPage from '@/page/calendar/CalendarPage.vue'
 import NewDiary from '@/page/diary/NewDiary.vue'
 import NewBudget from '@/page/budget/NewBudget.vue'
 import BudgetSettings from '@/page/budget/BudgetSettings.vue'
+import BudgetAnalysis from '@/page/budget/BudgetAnalysis.vue'
 import DiariesPage from '@/page/diary/DiariesPage.vue'
 import DashboardPage from '@/page/dashboard/DashboardPage.vue'
 
@@ -46,6 +47,10 @@ const router = createRouter({
           path: 'settings',
           component: BudgetSettings,
         },
+        {
+          path: 'analysis',
+          component: BudgetAnalysis,
+        }
       ]
     },
     {
