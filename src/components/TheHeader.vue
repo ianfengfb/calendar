@@ -53,7 +53,25 @@
                     </v-menu>
                 </li>
                 <li>
-                    <router-link :to="calender.path">{{ calender.title }}</router-link>
+                    <v-menu location="bottom" open-on-hover>
+                        <template v-slot:activator="{ props }">
+                            <v-btn
+                            color="#e9e9e9"
+                            dark
+                            v-bind="props"
+                            >
+                                Calendar
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                            v-for="cal in calendar"
+                            :key="cal"
+                            >
+                                <router-link :to="cal.path">{{ cal.title }}</router-link>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </li>
             </ul>
         </nav>
@@ -77,10 +95,10 @@
                     { title: 'Budgets Settings', path: '/budgets/settings'},
                     { title: 'Analysis', path: '/budgets/analysis'},
                 ],
-                calender: {
-                    title: 'Calender',
-                    path: '/calendar'
-                },
+                calendar: [
+                    { title: 'Calendar', path: '/calendar/board'},
+                    { title: 'Calendar Settings', path: '/calendar/settings'},
+                ],
             }
         }
     }

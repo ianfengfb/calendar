@@ -231,13 +231,12 @@
                 return new Date(date.getFullYear(), date.getMonth() + 1, 0);
             },
             onSearch() {
-                // let data = new FormData();
-                // data.append('start_date', this.dateToFormatYMD(this.datePickerValueStart));
-                // data.append('end_date', this.dateToFormatYMD(this.datePickerValueEnd));
-                // const seletedTypeIds = this.type.map(type => type.id);
-                // data.append('budget_type_ids', JSON.stringify(seletedTypeIds));
-                // this.$store.dispatch('budgets/fetchExpensesPieChart', data);
-                this.showDialogTrigger.value = !this.showDialogTrigger.value;
+                let data = new FormData();
+                data.append('start_date', this.dateToFormatYMD(this.datePickerValueStart));
+                data.append('end_date', this.dateToFormatYMD(this.datePickerValueEnd));
+                const seletedTypeIds = this.type.map(type => type.id);
+                data.append('budget_type_ids', JSON.stringify(seletedTypeIds));
+                this.$store.dispatch('budgets/fetchExpensesPieChart', data);
             },
             dateToFormatYMD(date) {
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

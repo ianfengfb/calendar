@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CalendarPage from '@/page/calendar/CalendarPage.vue'
+import CalendarSetting from '@/page/calendar/CalendarSetting.vue'
 import NewDiary from '@/page/diary/NewDiary.vue'
 import NewBudget from '@/page/budget/NewBudget.vue'
 import BudgetSettings from '@/page/budget/BudgetSettings.vue'
@@ -16,7 +17,16 @@ const router = createRouter({
     },
     {
       path: '/calendar',
-      component: CalendarPage
+      children: [
+        {
+          path: 'board',
+          component: CalendarPage
+        },
+        {
+          path: 'settings',
+          component: CalendarSetting
+        }
+      ]
     },
     {
       path: '/diaries',

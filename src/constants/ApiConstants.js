@@ -20,6 +20,13 @@ const apis = {
     fetchSearchContent: `${baseUrl}get-search-result`,
     fetchSingleItem: `${baseUrl}get-single-item`,
     fetchExpensesPieChart: `${baseUrl}get-expense-pie-chart-data`,
+    fetchEventTypes: `${baseUrl}event-types`,
+    addEventType: `${baseUrl}event-types`,
+    updateEventType: `${baseUrl}update-event-type`,
+    addEvent: `${baseUrl}events`,
+    fetchEvents: `${baseUrl}get-events`,
+    updateEvent: `${baseUrl}update-event`,
+    deleteEvent: `${baseUrl}delete-event`,
 }
 
 export default apis;
