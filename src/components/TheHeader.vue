@@ -73,6 +73,14 @@
                         </v-list>
                     </v-menu>
                 </li>
+                <li>
+                    <!-- <v-btn
+                    color="#e9e9e9"
+                    dark
+                    > -->
+                        <router-link :to="report.path">{{ report.title }}</router-link>
+                    <!-- </v-btn> -->
+                </li>
             </ul>
         </nav>
     </header>
@@ -99,6 +107,10 @@
                     { title: 'Calendar', path: '/calendar/board'},
                     { title: 'Calendar Settings', path: '/calendar/settings'},
                 ],
+                report: {
+                    title: 'Report',
+                    path: '/report'
+                }
             }
         }
     }

@@ -27,6 +27,7 @@ const apis = {
     fetchEvents: `${baseUrl}get-events`,
     updateEvent: `${baseUrl}update-event`,
     deleteEvent: `${baseUrl}delete-event`,
+    addReport: `${baseUrl}reports`,
 }
 
 export default apis;

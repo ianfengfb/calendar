@@ -189,7 +189,7 @@
     import { mergeProps } from 'vue';
     export default {
         data: () => ({
-            user: false,
+            user: true,
             calendarValue: [new Date()],
             newEventDialog: false,
             newEventDate: null,
@@ -290,6 +290,7 @@
                 const span = event.currentTarget.querySelector('.v-btn__content');
                 if (span) {
                     const day = span.textContent.trim();
+                    console.log('day====>', day);
                     this.openNewEventFormOnDay(day);
                 }
             },
@@ -307,7 +308,9 @@
                 data.append('user_id', this.user ? 2 : 1);
                 this.$store.dispatch('calendar/fetchEvents', data);
                 this.detachClickListeners();
-                this.attachClickListeners();
+                this.$nextTick(() => {
+                    this.attachClickListeners();
+                });
             },
             async createNewEvent() {
                 const data = new FormData();

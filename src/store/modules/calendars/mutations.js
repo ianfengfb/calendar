@@ -13,6 +13,7 @@ export default {
         if (state.events[event.date]) {
             state.events[event.date].push(event)
         } else {
+            console.log('events', event)
             state.events[event.date] = [event]
         }
     },

@@ -7,6 +7,7 @@ import BudgetSettings from '@/page/budget/BudgetSettings.vue'
 import BudgetAnalysis from '@/page/budget/BudgetAnalysis.vue'
 import DiariesPage from '@/page/diary/DiariesPage.vue'
 import DashboardPage from '@/page/dashboard/DashboardPage.vue'
+import ReportPage from '@/page/report/ReportPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +67,10 @@ const router = createRouter({
     {
       path: '/dashboard',
       component: DashboardPage
+    },
+    {
+      path: '/report',
+      component: ReportPage
     }
   ]
 })
