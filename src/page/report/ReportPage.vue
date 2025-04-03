@@ -16,6 +16,7 @@
                       <v-date-picker 
                           v-model="datePickerValueStart"
                           @update:modelValue="selectDate('start')"
+                          :allowed-dates="allowedFirstDay"
                           class="mx-auto"
                       ></v-date-picker>
                     </v-dialog>
@@ -34,6 +35,7 @@
                     <v-date-picker 
                         v-model="datePickerValueEnd"
                         @update:modelValue="selectDate('end')"
+                        :allowed-dates="allowedLastDay"
                         class="mx-auto"
                     ></v-date-picker>
                   </v-dialog>
@@ -110,7 +112,7 @@
                 showDatePickerStart: false,
                 showDatePickerEnd: false,
                 datePickerValueStart: this.getStartOfTheYear(),
-                datePickerValueEnd: new Date(),
+                datePickerValueEnd: this.getLastDayOfTheMonth(),
                 user: true,
                 type: [],
                 reportTypes: ['Activity', 'Expense', 'Diary'],
@@ -143,17 +145,32 @@
             },
             selectDate(type) {
                 if (type === 'start') {
-                    this.startDate = this.datePickerValueStart
                     this.showDatePickerStart = false
                 } else {
-                    this.endDate = this.datePickerValueEnd
                     this.showDatePickerEnd = false
                 }
+            },
+            allowedFirstDay(date) {
+                return new Date(date).getDate() === 1;
+            },
+            allowedLastDay(date) {
+                const currentDate = new Date(date);
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                const lastDay = new Date(year, month + 1, 0).getDate();
+
+                return currentDate.getDate() === lastDay;
             },
             getStartOfTheYear() {
                 const date = new Date();
                 date.setMonth(0);
                 date.setDate(1);
+                return date;
+            },
+            getLastDayOfTheMonth() {
+                const date = new Date();
+                date.setMonth(date.getMonth() + 1);
+                date.setDate(0);
                 return date;
             },
             async genereateReport() {
