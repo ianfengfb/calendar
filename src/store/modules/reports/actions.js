@@ -2,6 +2,15 @@ import ApiConstants from '@/constants/ApiConstants';
 import axios from 'axios';
 
 export default {
+    async fetchReports({ commit }) {
+        try {
+            const response = await axios.get(ApiConstants.fetchReports);
+            const responseData = response?.data?.data;
+            commit('fetchReports', responseData);
+        } catch (error) {
+            console.error(error);
+        }
+    },
     async addReport({ commit, dispatch }, report) {
         dispatch('global/clearAlert', null, { root: true });
         try {

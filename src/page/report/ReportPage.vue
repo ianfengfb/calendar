@@ -64,7 +64,6 @@
                 </div>
                 <div class="col-12 px-4">
                     <v-combobox
-                        multiple
                         label="Report Types"
                         :items="reportTypes"
                         v-model="type"
@@ -83,7 +82,39 @@
                 </div>
             </v-row>
             <v-row>
-                
+                <v-divider></v-divider>
+                <v-table class="w-100">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                            <b>Title</b>
+                            </th>
+                            <th class="text-center">
+                                <b>User</b>
+                            </th>
+                            <th class="text-center">
+                                <b>Start Date</b>
+                            </th>
+                            <th class="text-center">
+                                <b>End Date</b>
+                            </th>
+                            <th class="text-center">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                        v-for="report in reports"
+                        :key="report.id"
+                    >
+                        <td class="text-center">{{ report.title }}</td>
+                        <td class="text-center">{{ report.user.name }}</td>
+                        <td class="text-center">{{ report.start_date }}</td>
+                        <td class="text-center">{{ report.end_date }}</td>
+                        <td class="text-center"><a :href="report.report_cloud_url" target="_blank">View Report</a></td>
+                    </tr>
+                    </tbody>
+                </v-table>
             </v-row>
             <v-dialog
             v-model="notificationDialog"
@@ -121,7 +152,13 @@
                 notificationDialog: false
             }
         },
+        mounted() {
+            this.$store.dispatch('reports/fetchReports');
+        },
         computed: {
+            reports() {
+                return this.$store.getters['reports/getReports'];
+            },
             startDate() {
                 return this.datePickerValueStart.toDateString();
             },
@@ -181,7 +218,7 @@
                 data.append('user_id', this.user ? 2 : 1);
                 data.append('start_date', this.formatDate(this.datePickerValueStart));
                 data.append('end_date', this.formatDate(this.datePickerValueEnd));
-                data.append('type', JSON.stringify(this.type));
+                data.append('type', JSON.stringify([this.type]));
                 await this.$store.dispatch('reports/addReport', data);
                 this.disbaleActions = false;
                 this.btnText = 'Generate Report';

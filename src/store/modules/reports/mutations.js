@@ -1,5 +1,8 @@
 export default {
+    fetchReports(state, reports) {
+        state.reports = reports;
+    },
     addReport(state, report) {
-        state.reports.push(report);
+        state.reports.unshift(report);
     }
 }

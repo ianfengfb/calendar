@@ -27,6 +27,7 @@ const apis = {
     fetchEvents: `${baseUrl}get-events`,
     updateEvent: `${baseUrl}update-event`,
     deleteEvent: `${baseUrl}delete-event`,
+    fetchReports: `${baseUrl}get-reports`,
     addReport: `${baseUrl}reports`,
 }
 
