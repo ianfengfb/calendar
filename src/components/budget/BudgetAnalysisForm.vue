@@ -115,7 +115,38 @@
                     <v-data-table-virtual v-else :items="tableData"></v-data-table-virtual>
                 </div>
             </v-row>
-            
+            <v-row>
+                <div class="col-12">
+                    <!-- <v-table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in detailedExepensesData" :key="index">
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.budget_type_name }}</td>
+                                <td>{{ item.amount }}</td>
+                                <td>{{ item.note }}</td>
+                            </tr>
+                        </tbody>
+                    </v-table> -->
+                    <v-data-table-virtual
+                        :items="detailedExepensesData"
+                        :headers="[
+                            { title: 'Date', key: 'date' },
+                            { title: 'Type', key: 'budget_type_name' },
+                            { title: 'Amount', key: 'amount' },
+                            { title: 'Note', key: 'note' }
+                        ]"
+                        class="elevation-1"
+                    ></v-data-table-virtual>
+                </div>
+            </v-row>
         </div>
     </v-row>
 </template>
@@ -199,7 +230,11 @@
             tableData() {
                 if (!this.expensePieChart.tableData) return [];
                 return this.expensePieChart.tableData;
-            }
+            },
+            detailedExepensesData() {
+                if (!this.expensePieChart.detailedExpenses) return [];
+                    return this.expensePieChart.detailedExpenses;
+                },
         },
         methods: {
             toggleDatePicker(type) {

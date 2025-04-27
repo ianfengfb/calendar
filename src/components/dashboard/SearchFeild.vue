@@ -55,11 +55,13 @@
         },
         methods: {
             clickSearchHandler(item) {
-                this.dialog = true;
-                let data = new FormData();
-                data.append('type', item.type);
-                data.append('date', item.date);
-                this.$store.dispatch('dashboard/fetchSingleItem', data);
+                if (item.type !== 'event') {
+                    this.dialog = true;
+                    let data = new FormData();
+                    data.append('type', item.type);
+                    data.append('date', item.date);
+                    this.$store.dispatch('dashboard/fetchSingleItem', data);
+                }
             },
             searchHandler() {
                 if (this.search.length >= 3) {

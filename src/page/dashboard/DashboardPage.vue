@@ -21,9 +21,9 @@
             </div>
             <div class="col-4 my-5">
                 <summary-card
-                    icon="mdi-timer-sand"
-                    :number="summaryCards.freeHoursLastWeek"
-                    title="Number of free hours last week"
+                    icon="mdi-calendar"
+                    :number="summaryCards.totalEventsLastWeek"
+                    title="Number of activities last week"
                 ></summary-card>
             </div>
             <div class="col-6 px-3">
