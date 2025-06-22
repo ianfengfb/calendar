@@ -19,10 +19,12 @@
         item-title="name"
         item-value="id"
         hide-no-data
+        auto-select-first
         v-model="type"
         :disabled="disbaleActions"
         class="mt-5"
         @update:modelValue="typeChange"
+        @keydown.tab.prevent="selectFirstItem"
     >
         <template v-slot:no-data>
             <v-list-item>
@@ -45,6 +47,7 @@
     <p class="text-err" v-if="!isTypeValid">Please choose a type</p>
     <p class="text-err" v-if="isDuplicatedType">The type you entered already exists</p>
     <v-text-field
+        ref="amountInput"
         label="Amount"
         v-model.trim="amount"
         prepend-inner-icon="mdi-currency-usd"
@@ -190,6 +193,15 @@
                 if (this.type !== null) {
                     this.isTypeValid = true;
                     this.isDuplicatedType = false;
+                }
+            },
+            selectFirstItem() {
+                if (this.fechedTypes.length > 0 && this.search.trim().length > 0) {
+                    //if this.search matches an existing type, select it
+                    const matchedType = this.fechedTypes.find(type => type.name.toLowerCase() === this.search.trim().toLowerCase());
+                    if (matchedType) {
+                        this.$refs.amountInput.focus();
+                    }
                 }
             },
             dateToString(date) {
