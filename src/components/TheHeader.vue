@@ -72,6 +72,7 @@
                 ],
                 budgets: [
                     { title: 'New Expense', path: '/budgets/new'},
+                    { title: 'Bulk Import', path: '/budgets/import'},
                     { title: 'Budgets Settings', path: '/budgets/settings'},
                 ]
             }

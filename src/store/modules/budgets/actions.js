@@ -87,6 +87,28 @@ export default {
             }, 3000);
         }
     },
+    async bulkImportExpenses({ dispatch }, formData) {
+        dispatch('global/clearAlert', null,{ root: true });
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/expense-items/bulk-import', formData);
+            const responseData = response?.data;
+            dispatch('global/createAlert', {
+                title: responseData?.message || 'Expenses imported successfully!',
+                type: 'success'
+            }, { root: true });
+            setTimeout(() => {
+                dispatch('global/clearAlert', null,{ root: true });
+            }, 3000);
+            return responseData;
+        } catch (error) {
+            const errorData = error?.response?.data;
+            dispatch('global/createAlert', {
+                title: errorData?.message || 'Failed to import expenses!',
+                type: 'error'
+            }, { root: true });
+            throw errorData || error;
+        }
+    },
     async updateBudgetType({ commit, dispatch }, budgetType) {
         dispatch('global/clearAlert', null,{ root: true });
         try {
