@@ -46,6 +46,30 @@
             </tbody>
         </v-table>
     </div>
+
+    <div class="import-success mt-5" v-if="importedItems.length > 0">
+        <p class="text-success">
+            {{ importedItems.length }} {{ importedItems.length === 1 ? 'expense' : 'expenses' }} imported successfully.
+        </p>
+        <v-table density="compact">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in importedItems" :key="item.id">
+                    <td>{{ item.date }}</td>
+                    <td>{{ typeName(item.budget_type_id) }}</td>
+                    <td>{{ item.amount }}</td>
+                    <td>{{ item.note || '-' }}</td>
+                </tr>
+            </tbody>
+        </v-table>
+    </div>
 </template>
 
 <script>
@@ -57,14 +81,31 @@
                 submitting: false,
                 btnText: 'Import',
                 entryErrors: [],
+                importedItems: [],
             }
         },
+        mounted() {
+            this.$store.dispatch('budgets/fetchBudgetTypes', 'expense');
+        },
+        computed: {
+            budgetTypesById() {
+                const types = this.$store.getters['budgets/getBudgetTypes'];
+                return types.reduce((map, type) => {
+                    map[type.id] = type.name;
+                    return map;
+                }, {});
+            },
+        },
         methods: {
+            typeName(budgetTypeId) {
+                return this.budgetTypesById[budgetTypeId] || `#${budgetTypeId}`;
+            },
             fileChange() {
                 if (this.file) {
                     this.isFileValid = true;
                 }
                 this.entryErrors = [];
+                this.importedItems = [];
             },
             async importExpenses() {
                 if (!this.file || (Array.isArray(this.file) && this.file.length === 0)) {
@@ -72,12 +113,14 @@
                     return;
                 }
                 this.entryErrors = [];
+                this.importedItems = [];
                 const data = new FormData();
                 data.append('file', Array.isArray(this.file) ? this.file[0] : this.file);
                 this.submitting = true;
                 this.btnText = 'Importing...';
                 try {
-                    await this.$store.dispatch('budgets/bulkImportExpenses', data);
+                    const result = await this.$store.dispatch('budgets/bulkImportExpenses', data);
+                    this.importedItems = result?.data || [];
                     this.file = null;
                 } catch (error) {
                     this.entryErrors = error?.data?.errors || [];
@@ -97,6 +140,11 @@
     }
     .text-err {
         color: rgb(176, 0, 32);
+        font-size: 12px;
+        padding: 6px 0 0 12px;
+    }
+    .text-success {
+        color: rgb(15, 118, 45);
         font-size: 12px;
         padding: 6px 0 0 12px;
     }
